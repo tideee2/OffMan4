@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
 
 @Component({
     selector: 'app-main',
@@ -8,7 +9,7 @@ import {Component, OnInit} from '@angular/core';
 export class MainPage implements OnInit {
     transactions = [];
 
-    constructor() {
+    constructor(public navCtrl: NavController) {
 
     }
 
@@ -16,4 +17,7 @@ export class MainPage implements OnInit {
        console.log(this.transactions);
     }
 
+    addTransaction() {
+        this.navCtrl.navigateForward('/add-transaction');
+    }
 }

@@ -5,6 +5,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'main', loadChildren: './main/main.module#MainPageModule' },
+  { path: 'add-transaction', loadChildren: './add-transaction/add-transaction.module#AddTransactionPageModule' },
 ];
 
 @NgModule({

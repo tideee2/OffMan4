@@ -2,3 +2,15 @@ ion-item {
   --border-width: 0;
   --inner-border-width: 0;
 }
+
+ion-list {
+  --ion-background-color: green;
+  --border-bottom-color: red;
+}
+
+ion-fab {
+  --ion-color-primary: #f9aa33;
+  --ion-color-primary-activated: #f9aa33;
+  --background-activated: red;
+  --ion-text-color: #f00;
+}
