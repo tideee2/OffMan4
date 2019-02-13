@@ -1,60 +1,63 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>add-transaction</ion-title>
+    <ion-title>Add transaction</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <!--<form [formGroup]="transactionForm">-->
-    <!--<ion-item>-->
-      <!--<ion-label>Select type</ion-label>-->
-      <!--<ion-select formControlName="transactionType" name="transactionType">-->
-        <!--<ion-option value="decrease" [selected]="true">Outcoming</ion-option>-->
-        <!--<ion-option value="increase">Incoming</ion-option>-->
-      <!--</ion-select>-->
-    <!--</ion-item>-->
+  <form [formGroup]="transactionForm">
+    <ion-item no-padding>
+      <ion-label>Select type</ion-label>
+      <ion-select formControlName="transactionType" name="transactionType" [(ngModel)]="transactionTypeDefaultValue">
+        <ion-select-option value="decrease" [selected]="true">Outcoming</ion-select-option>
+        <ion-select-option value="increase">Incoming</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-    <!--<ion-item *ngIf="transactionType.value === 'decrease'">-->
-      <!--<ion-label>Select category</ion-label>-->
-      <!--<ion-select formControlName="category" name="category">-->
-        <!--<ion-option value="{{x}}" *ngFor="let x of listOfCategories.slice(0,-1)">{{x}}</ion-option>-->
-      <!--</ion-select>-->
-    <!--</ion-item>-->
-    <!--<ion-item *ngIf="transactionType.value === 'increase'" hidden>-->
-      <!--<ion-label>Select category</ion-label>-->
-      <!--<ion-input formControlName="category" value="{{listOfIncrease[0]}}"></ion-input>-->
-    <!--</ion-item>-->
+    <ion-item *ngIf="transactionType.value === 'decrease'"  no-padding>
+      <ion-label>Select category</ion-label>
+      <ion-select formControlName="category" name="category" [(ngModel)]="categoryDefaultValue">
+        <ion-select-option value="{{x}}" *ngFor="let x of listOfCategories.slice(0,-1)">{{x}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="transactionType.value === 'increase'" hidden  no-padding>
+      <ion-label>Select category</ion-label>
+      <ion-input formControlName="category" value="{{listOfIncrease[0]}}"></ion-input>
+    </ion-item>
 
-    <!--<div class="input-container">-->
-      <!--<ion-item no-padding no-border>-->
-        <!--<ion-label>Price</ion-label>-->
-        <!--<ion-input name="cost" formControlName="cost" placeholder="" type="number"></ion-input>-->
-      <!--</ion-item>-->
-      <!--<ion-item no-padding no-border>-->
-        <!--<ion-label position="floating">Comment</ion-label>-->
-        <!--<ion-input name="description" formControlName="description"></ion-input>-->
-      <!--</ion-item>-->
-      <!--<div *ngIf="cost.invalid && (cost.dirty || cost.touched)" color="danger"-->
-           <!--class="alert alert-danger">-->
-        <!--<span class="text-ios-danger">{{ errorSrv.getErrorMessage(transactionForm, 'cost', validation_messages) }}</span>-->
-      <!--</div>-->
-      <!--<div *ngIf="description.invalid && (description.dirty || description.touched)" color="danger"-->
-           <!--class="alert alert-danger">-->
-        <!--<span class="text-ios-danger">{{ errorSrv.getErrorMessage(transactionForm, 'description', validation_messages) }}</span>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</form>-->
+    <div class="input-container">
+      <ion-item no-padding>
+        <ion-label>Price</ion-label>
+        <ion-input name="cost" formControlName="cost" placeholder="" type="number"></ion-input>
+      </ion-item>
+      <ion-item no-padding>
+        <ion-label>Comment</ion-label>
+        <ion-input name="description" formControlName="description"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col *ngIf="cost.invalid && (cost.dirty || cost.touched)" color="danger"
+             class="alert alert-danger">
+          <span class="text-ios-danger">{{ errorSrv.getErrorMessage(transactionForm, 'cost', validation_messages) }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf="description.invalid && (description.dirty || description.touched)" color="danger"
+             class="alert alert-danger">
+          <span class="text-ios-danger">{{ errorSrv.getErrorMessage(transactionForm, 'description', validation_messages) }}</span>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
 
-  <div class="input-container buttons-wrap">
-    <ion-row>
+    <ion-row class="btn-container">
       <ion-col size="6">
-        <button ion-button clear full (click)="cancel()">Cancel</button>
+        <ion-button expand="block" fill="clear" shape="" (click)="cancel()">Cancel</ion-button>
       </ion-col>
       <ion-col size="6">
-        <button ion-button clear full (click)="submitPurchase()" class="sbt-btn" color="orange" [disabled]="!transactionForm.valid">
+        <ion-button expand="block" fill="solid" (click)="submitPurchase()" color="orange" [disabled]="!transactionForm.valid">
           Submit
-        </button>
+        </ion-button>
       </ion-col>
     </ion-row>
-  </div>
+
 </ion-content>

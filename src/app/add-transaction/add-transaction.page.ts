@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import { Vars } from '../../config/settings';
+import {Vars} from '../../config/settings';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ErrorsService} from '../providers/errors/errors.service';
+import {StorageService} from '../providers/storage/storage.service';
 
 @Component({
     selector: 'app-add-transaction',
@@ -13,24 +16,28 @@ export class AddTransactionPage implements OnInit {
     public transaction;
     listOfCategories = Vars.categories;
     listOfIncrease = Vars.incoming;
+    transactionTypeDefaultValue = 'decrease';
+    categoryDefaultValue = 'others';
 
     constructor(public navCtrl: NavController,
+                public errorSrv: ErrorsService,
+                public storageSrv: StorageService,
                 public formBuilder: FormBuilder,
     ) {
-        // this.transactionForm = this.formBuilder.group({
-        //     transactionType: ['', Validators.required],
-        //     cost: ['', Validators.compose([
-        //         Validators.required,
-        //         Validators.pattern('^(\\d*\\.)?\\d+$')
-        //     ])],
-        //     category: ['', Validators.required],
-        //     description: ['',
-        //         Validators.compose([
-        //             Validators.required,
-        //             Validators.maxLength(30),
-        //             Validators.minLength(5)
-        //         ])]
-        // });
+        this.transactionForm = this.formBuilder.group({
+            transactionType: ['', Validators.required],
+            cost: ['', Validators.compose([
+                Validators.required,
+                Validators.pattern('^(\\d*\\.)?\\d+$')
+            ])],
+            category: ['', Validators.required],
+            description: ['',
+                Validators.compose([
+                    Validators.required,
+                    Validators.maxLength(30),
+                    Validators.minLength(5)
+                ])]
+        });
 
         this.validation_messages = {
             'cost': {
@@ -82,6 +89,22 @@ export class AddTransactionPage implements OnInit {
     }
 
     cancel(): void {
-        this.navCtrl.pop();
+        this.navCtrl.navigateBack('/main').catch(err => console.log(err));
+    }
+
+    submitPurchase(): void {
+        console.log(this.transactionForm);
+        const temp = this.storageSrv.transactions;
+        console.log(temp);
+        temp.push({
+            cost: this.cost.value,
+            category: this.category.value,
+            transactionType: this.transactionType.value,
+            description: this.description.value,
+            date: new Date()
+        });
+        console.log(temp);
+        this.storageSrv.transactions = temp;
+        this.navCtrl.navigateBack('/main').catch(err => console.log(err));
     }
 }

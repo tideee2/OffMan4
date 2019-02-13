@@ -1,16 +1,39 @@
+:root {
+  --ion-color-primary: #f9aa33;
+  --ion-color-primary-rgb: 249,170,51;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-shade: #db962d;
+  --ion-color-primary-tint: #fab347;
+}
 ion-item {
   --border-width: 0;
   --inner-border-width: 0;
 }
 
 ion-list {
-  --ion-background-color: green;
+  --ion-background-color: #fff;
   --border-bottom-color: red;
+  min-height: 90vh;
+  ion-list-header {
+    display: flex;
+    //justify-content: space-around;
+    //margin-bottom: 20px;
+  }
 }
 
 ion-fab {
   --ion-color-primary: #f9aa33;
   --ion-color-primary-activated: #f9aa33;
-  --background-activated: red;
-  --ion-text-color: #f00;
+  --ion-color-primary-shade: #f9aa33;
+  --ion-color-primary-tint: #f9aa33;
+}
+ion-header{
+  --ion-toolbar-background: #344955;
+  --ion-toolbar-color: #fff;
+
+  ion-title{
+    font-weight: 500;
+    letter-spacing: 1.5px;
+  }
 }

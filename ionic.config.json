@@ -1,5 +1,7 @@
 {
   "name": "OffManV4",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
