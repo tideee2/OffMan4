@@ -10,11 +10,14 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {IonicStorageModule} from '@ionic/storage';
+import {FilterPage} from './filter/filter.page';
+import {FilterPageModule} from './filter/filter.module';
 
 @NgModule({
-    declarations: [AppComponent],
-    entryComponents: [],
+    declarations: [AppComponent, FilterPage],
+    entryComponents: [FilterPage],
     imports: [
+        // FilterPageModule,
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,

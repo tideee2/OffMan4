@@ -5,24 +5,22 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MainPage } from './main.page';
-import {FilterPage} from '../filter/filter.page';
+import { FilterPage } from './filter.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPage
+    component: FilterPage
   }
 ];
 
 @NgModule({
-
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MainPage]
+  declarations: []
 })
-export class MainPageModule {}
+export class FilterPageModule {}

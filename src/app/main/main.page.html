@@ -1,10 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>main</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!--<ion-header>-->
+<!--<ion-toolbar>-->
+<!--<ion-title>balance: {{balance}}</ion-title>-->
+<!--</ion-toolbar>-->
+<!--</ion-header>-->
 
 <ion-content no-padding>
+    <ion-card color="" no-padding no-margin>
+        <ion-card-content>
+            <p>Balance: {{balance}}</p>
+            <ion-icon name="calendar"></ion-icon>
+        </ion-card-content>
+    </ion-card>
     <ion-list class="product-list" padding-horizontal>
         <ion-list-header class="list-title ion-text-center">
             <span>Transaction history</span>
@@ -23,10 +29,10 @@
                         {{x.cost}} грн
                     </div>
                     <div class="container-icons row">
-                        <div class="edit-button col-6" (click)="addPurchase(x)" >
+                        <div class="edit-button col-6" (click)="addPurchase(x)">
                             <ion-icon name="md-create"></ion-icon>
                         </div>
-                        <div class="delete-button col-6" (click)="deletePurchase(x)" >
+                        <div class="delete-button col-6" (click)="clickDelete(i)">
                             <ion-icon name="trash"></ion-icon>
                         </div>
 
@@ -35,15 +41,28 @@
             </div>
         </ion-item>
     </ion-list>
-  <!--<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">-->
+    <!--<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">-->
     <!--<ion-infinite-scroll-content-->
-            <!--loadingSpinner="bubbles"-->
-            <!--loadingText="Loading more data...">-->
+    <!--loadingSpinner="bubbles"-->
+    <!--loadingText="Loading more data...">-->
     <!--</ion-infinite-scroll-content>-->
-  <!--</ion-infinite-scroll>-->
-    <ion-fab vertical="bottom" horizontal="center" slot="fixed" (click)="addTransaction()">
+    <!--</ion-infinite-scroll>-->
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
-            <ion-icon name="add" color="dark"></ion-icon>
+            <ion-icon name="md-arrow-dropleft" color="dark"></ion-icon>
         </ion-fab-button>
+        <ion-fab-list side="start">
+            <ion-fab-button (click)="goToSettings()" color="orange">
+                <ion-icon ios="ios-settings" md="md-settings" color="dark"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="presentModal()" color="orange">
+                <ion-icon name="ios-funnel" color="dark"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="addTransaction()" color="orange">
+                <ion-icon name="add" color="dark"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
     </ion-fab>
+
 </ion-content>

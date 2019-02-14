@@ -96,14 +96,15 @@ export class AddTransactionPage implements OnInit {
         console.log(this.transactionForm);
         const temp = this.storageSrv.transactions;
         console.log(temp);
-        temp.push({
+        temp.unshift({
             cost: this.cost.value,
-            category: this.category.value,
-            transactionType: this.transactionType.value,
+            category: this.transactionType.value === 'decrease' ? this.category.value : 'increase',
+            type: this.transactionType.value,
             description: this.description.value,
             date: new Date()
         });
         console.log(temp);
+        this.storageSrv.balance = this.storageSrv.balance + ((this.transactionType.value === 'decrease') ? -1 : 1) * this.cost.value;
         this.storageSrv.transactions = temp;
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
     }

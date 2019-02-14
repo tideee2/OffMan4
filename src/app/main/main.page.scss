@@ -1,11 +1,12 @@
 :root {
   --ion-color-primary: #f9aa33;
-  --ion-color-primary-rgb: 249,170,51;
+  --ion-color-primary-rgb: 249, 170, 51;
   --ion-color-primary-contrast: #000000;
-  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
   --ion-color-primary-shade: #db962d;
   --ion-color-primary-tint: #fab347;
 }
+
 ion-item {
   --border-width: 0;
   --inner-border-width: 0;
@@ -14,7 +15,9 @@ ion-item {
 ion-list {
   --ion-background-color: #fff;
   --border-bottom-color: red;
-  min-height: 90vh;
+  min-height: 95vh;
+  height:95%;
+
   ion-list-header {
     display: flex;
     //justify-content: space-around;
@@ -28,12 +31,95 @@ ion-fab {
   --ion-color-primary-shade: #f9aa33;
   --ion-color-primary-tint: #f9aa33;
 }
-ion-header{
+
+ion-header {
   --ion-toolbar-background: #344955;
   --ion-toolbar-color: #fff;
 
-  ion-title{
+  ion-title {
     font-weight: 500;
     letter-spacing: 1.5px;
+  }
+}
+ion-card {
+  border-radius: 0;
+  --ion-background-color: #344955;
+  //--ion-color-primary: #344955;
+  --color: #fff;
+  height: 10vh;
+  ion-card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  //position: fixed;
+  z-index: 10;
+  ion-card-content {
+    p,
+    ion-icon{
+      font-size: 1.5rem;
+    }
+  }
+
+}
+.product-list {
+  //margin-top: 20vh;
+  border-radius: 10px 10px 0 0;
+}
+.transaction-container {
+  width: 100%;
+  display: flex;
+  color: #33333D;
+  justify-content: space-between;
+  .col:nth-last-child(1) {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  &.enable-edit {
+    .container-icons {
+      display: block;
+    }
+    .cost {
+      display: none;
+    }
+  }
+  .container-icons {
+    display: none;
+  }
+  .edit-button,
+  .delete-button{
+    line-height: 2.3em;
+    text-align: center;
+    display: inline-block;
+    color: #fff;
+    background: #f9aa33;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    //padding: 5px 0 0 8px;
+    ion-icon {
+      font-size: 20px;
+    }
+  }
+  .delete-button {
+    background-color: #ba2f00;
+    margin-left: 3px;
+  }
+  .datetime {
+    color: #b4b4b4;
+  }
+  .col-left {
+    border-left-width: 4px;
+    border-left-style: solid;
+    padding: 0 8px;
+  }
+  .decrease-color {
+    color: #ba2f00;
+  }
+  .increase-color {
+    color: #006500;
   }
 }
