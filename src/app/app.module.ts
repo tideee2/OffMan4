@@ -10,14 +10,20 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {IonicStorageModule} from '@ionic/storage';
-import {FilterPage} from './filter/filter.page';
-import {FilterPageModule} from './filter/filter.module';
+import { MainPopoverComponent } from './main-popover/main-popover.component';
+import {NgCalendarModule} from 'ionic2-calendar';
 
 @NgModule({
-    declarations: [AppComponent, FilterPage],
-    entryComponents: [FilterPage],
+    declarations: [
+        AppComponent,
+        MainPopoverComponent,
+
+    ],
+    entryComponents: [
+        MainPopoverComponent
+    ],
     imports: [
-        // FilterPageModule,
+        // NgCalendarModule,
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,

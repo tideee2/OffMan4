@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertController, ModalController, NavController} from '@ionic/angular';
+import {AlertController, ModalController, NavController, PopoverController} from '@ionic/angular';
 import {StorageService} from '../providers/storage/storage.service';
 import {Storage} from '@ionic/storage';
 import {Vars} from '../../config/settings';
 import {MessagesService} from '../providers/messages/messages.service';
 import {FilterPage} from '../filter/filter.page';
+import {MainPopoverComponent} from '../main-popover/main-popover.component';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-main',
@@ -23,7 +25,9 @@ export class MainPage implements OnInit {
                 public storage: Storage,
                 public messageSrv: MessagesService,
                 public alertCtrl: AlertController,
-                public modalCtrl: ModalController
+                public modalCtrl: ModalController,
+                public popoverCtrl: PopoverController,
+                public router: Router
     ) {
         // this.transactions = this.storageSrv.transaction;
         // console.log(this.storageSrv);
@@ -99,12 +103,13 @@ export class MainPage implements OnInit {
     }
 
     showButton(x: HTMLElement) {
-        // @ts-ignore
+
         document.querySelectorAll('.transaction-container').forEach(q => {
             if (q !== x) {
                 q.className = 'transaction-container';
             }
         });
+        // @ts-ignore
         x.className = (!~(x.className.indexOf('enable-edit'))) ? 'transaction-container enable-edit' : 'transaction-container';
     }
 
@@ -114,9 +119,9 @@ export class MainPage implements OnInit {
 
     async addFilter() {
         const filterPage = await this.modalCtrl.create({
-            component: 'FilterPage',
+            component: FilterPage,
         }).then(data => {
-            console.log(1)
+            console.log(1);
         }).catch(err => console.log(2));
         // this.navCtrl.navigateForward('/filter');
     }
@@ -126,5 +131,13 @@ export class MainPage implements OnInit {
             componentProps: { value: 123 }
         });
         return await modal.present();
+    }
+
+    async openPopover(event) {
+        const popover = await this.popoverCtrl.create({
+            component: MainPopoverComponent,
+            event: event
+        });
+        return await popover.present();
     }
 }

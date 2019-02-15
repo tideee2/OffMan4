@@ -3,26 +3,26 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
-import {IonicModule, NavParams} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import { MainPage } from './main.page';
-import {FilterPage} from '../filter/filter.page';
+import { CalendarPage } from './calendar.page';
+import {NgCalendarModule} from 'ionic2-calendar';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPage
+    component: CalendarPage
   }
 ];
 
 @NgModule({
-
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgCalendarModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MainPage]
+  declarations: [CalendarPage]
 })
-export class MainPageModule {}
+export class CalendarPageModule {}

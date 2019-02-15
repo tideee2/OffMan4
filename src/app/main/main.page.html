@@ -8,7 +8,7 @@
     <ion-card color="" no-padding no-margin>
         <ion-card-content>
             <p>Balance: {{balance}}</p>
-            <ion-icon name="calendar"></ion-icon>
+            <ion-icon name="ios-more" (click)="openPopover($event)"></ion-icon>
         </ion-card-content>
     </ion-card>
     <ion-list class="product-list" padding-horizontal>

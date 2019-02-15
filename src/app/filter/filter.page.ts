@@ -12,7 +12,9 @@ export class FilterPage implements OnInit {
   dateFrom: any;
   dateTo: any;
   category: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) { }
+  constructor(
+      public navCtrl: NavController,
+      public modalCtrl: ModalController) { }
 
   ngOnInit() {
   }
