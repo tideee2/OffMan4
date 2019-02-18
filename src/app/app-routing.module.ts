@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
   { path: 'filter', loadChildren: './filter/filter.module#FilterPageModule' },
   { path: 'calendar', loadChildren: './calendar/calendar.module#CalendarPageModule' },
+  { path: 'edit-transaction/:index', loadChildren: './edit-transaction/edit-transaction.module#EditTransactionPageModule' },
 ];
 
 @NgModule({

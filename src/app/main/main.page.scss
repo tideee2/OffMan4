@@ -6,7 +6,14 @@
   --ion-color-primary-shade: #db962d;
   --ion-color-primary-tint: #fab347;
 }
-
+ion-header {
+  ion-title {
+    letter-spacing: 0.5px!important;
+  }
+  ion-buttons {
+    font-size: 2rem;
+  }
+}
 ion-item {
   --border-width: 0;
   --inner-border-width: 0;
@@ -14,6 +21,17 @@ ion-item {
 ion-content{
   .list-ios {
     margin-bottom: 0;
+  }
+  .balance-container {
+    height: 20vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    ion-card-content {
+      p {
+        font-size: 3rem;
+      }
+    }
   }
 }
 ion-list {

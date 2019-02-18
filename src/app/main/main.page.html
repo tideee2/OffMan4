@@ -1,14 +1,16 @@
-<!--<ion-header>-->
-<!--<ion-toolbar>-->
-<!--<ion-title>balance: {{balance}}</ion-title>-->
-<!--</ion-toolbar>-->
-<!--</ion-header>-->
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Office managment app</ion-title>
+        <ion-buttons slot="end">
+            <ion-icon name="md-more" (click)="openPopover($event)"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
 <ion-content no-padding>
-    <ion-card color="" no-padding no-margin>
+    <ion-card color="" no-padding no-margin class="balance-container">
         <ion-card-content>
             <p>Balance: {{balance}}</p>
-            <ion-icon name="ios-more" (click)="openPopover($event)"></ion-icon>
         </ion-card-content>
     </ion-card>
     <ion-list class="product-list" padding-horizontal>
@@ -29,10 +31,10 @@
                         {{x.cost}} грн
                     </div>
                     <div class="container-icons row">
-                        <div class="edit-button col-6" (click)="addPurchase(x)">
+                        <div class="edit-button col-6" (click)="editTransactionClick(i)">
                             <ion-icon name="md-create"></ion-icon>
                         </div>
-                        <div class="delete-button col-6" (click)="clickDelete(i)">
+                        <div class="delete-button col-6" (click)="deleteTransactionClick(i)">
                             <ion-icon name="trash"></ion-icon>
                         </div>
 
@@ -49,20 +51,9 @@
     <!--</ion-infinite-scroll>-->
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button>
-            <ion-icon name="md-arrow-dropleft" color="dark"></ion-icon>
+        <ion-fab-button (click)="addTransactionClick()" color="orange">
+            <ion-icon name="add" color="dark"></ion-icon>
         </ion-fab-button>
-        <ion-fab-list side="start">
-            <ion-fab-button (click)="goToSettings()" color="orange">
-                <ion-icon ios="ios-settings" md="md-settings" color="dark"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-button (click)="presentModal()" color="orange">
-                <ion-icon name="ios-funnel" color="dark"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-button (click)="addTransaction()" color="orange">
-                <ion-icon name="add" color="dark"></ion-icon>
-            </ion-fab-button>
-        </ion-fab-list>
     </ion-fab>
 
 </ion-content>

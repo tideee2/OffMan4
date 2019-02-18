@@ -48,15 +48,18 @@ export class MainPage implements OnInit {
         });
     }
 
-    addTransaction() {
+    addTransactionClick() {
         this.navCtrl.navigateForward('/add-transaction');
     }
 
-    clickDelete(index: number) {
+    editTransactionClick(index: number) {
+        this.navCtrl.navigateForward('/edit-transaction/' + index);
+    }
+
+    deleteTransactionClick(index: number) {
 
         this.confirmAlert('Delete transaction',
             'Do you want delete this transaction?',
-
             {index: index}
         ).then(data => {
             console.log('delete successful');
@@ -64,9 +67,11 @@ export class MainPage implements OnInit {
 
     }
 
-    deleteTransaction(data: any) {
+    delT(data: any) {
         const index = data.index;
         const temp = this.storageSrv.transactions;
+        this.balance = this.balance + (this.transactions[index].type === 'decrease' ? 1 : -1) * this.transactions[index].cost;
+        this.storageSrv.balance = this.balance;
         temp.splice(index, 1);
         this.storageSrv.transactions = temp;
         this.transactions = temp;
@@ -86,16 +91,7 @@ export class MainPage implements OnInit {
                 },
                 {
                     text: 'Submit',
-                    handler: () => {
-                        const index = data.index;
-                        const temp = this.storageSrv.transactions;
-                        this.balance = this.balance + (this.transactions[index].type === 'decrease' ? 1 : -1) * this.transactions[index].cost;
-                        this.storageSrv.balance = this.balance;
-                        temp.splice(index, 1);
-                        this.storageSrv.transactions = temp;
-                        this.transactions = temp;
-
-                    }
+                    handler: this.delT.bind(this, data)
                 }
             ]
         });
