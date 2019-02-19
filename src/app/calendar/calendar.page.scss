@@ -1,4 +1,18 @@
 calendar,
 calendar .monthview-container {
-  height: auto!important;
+
+}
+::ng-deep .monthview-primary-with-event {
+  background: #f9aa33!important;
+}
+::ng-deep .monthview-selected {
+  background: none!important;
+  color: #000!important;
+  box-shadow: inset 0 0 1px 1px #f9aa33;
+}
+ion-card{
+  ion-card-content,
+  ion-card-header{
+    color: #fff;
+  }
 }

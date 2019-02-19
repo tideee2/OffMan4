@@ -59,10 +59,17 @@ export class EditTransactionPage implements OnInit {
         this.tempTransaction = this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')];
         console.log(this.tempTransaction);
 
+        // @todo remove ts-ignore
+
+        // @ts-ignore
         this.transactionForm.controls.transactionType.value = this.tempTransaction.type;
+        // @ts-ignore
         this.transactionForm.controls.category.value = this.tempTransaction.category;
+        // @ts-ignore
         this.transactionForm.controls.cost.value = this.tempTransaction.cost;
+        // @ts-ignore
         this.transactionForm.controls.description.value = this.tempTransaction.description;
+        // @ts-ignore
         this.transactionForm.controls.date.value = this.tempTransaction.date;
     }
 

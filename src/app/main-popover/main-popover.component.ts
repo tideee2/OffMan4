@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController, PopoverController} from '@ionic/angular';
+import {ModalController, NavController, PopoverController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {FilterPage} from '../filter/filter.page';
 
 @Component({
     selector: 'app-main-popover',
@@ -12,18 +13,19 @@ export class MainPopoverComponent implements OnInit {
     constructor(
         public popoverCtrl: PopoverController,
         public navCtrl: NavController,
-        public router: Router
+        public router: Router,
+        public modalCtrl: ModalController
     ) {
     }
 
     ngOnInit() {
     }
 
-    openFilter() {
-        // this.navCtrl.navigateForward('/filter');
-        this.router.navigateByUrl('/filter');
-        this.close();
-    }
+    // openFilter() {
+    //     // this.navCtrl.navigateForward('/filter');
+    //     this.router.navigateByUrl('/filter');
+    //     this.close();
+    // }
 
     openSettings() {
         // this.navCtrl.navigateForward('/filter');
@@ -43,5 +45,14 @@ export class MainPopoverComponent implements OnInit {
 
     qq() {
         console.log('qq');
+    }
+
+    async openFilter() {
+        const modal = await this.modalCtrl.create({
+            component: FilterPage,
+            componentProps: { value: 123 }
+        });
+        this.close();
+        return await modal.present();
     }
 }

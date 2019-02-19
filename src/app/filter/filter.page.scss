@@ -1,7 +1,50 @@
 ion-header {
   --ion-toolbar-background: #344955;
   --ion-toolbar-color: #fff;
+
   ion-buttons {
     --ion-color-primary: #fff;
   }
+}
+
+ion-content {
+  .input-container {
+    >ion-label {
+      margin-bottom: 40px;
+    }
+    margin: 10px 0 20px 0;
+    color: #fff;
+    ion-item {
+      color: #fff;
+    }
+  }
+  .btn-container {
+    margin-top:20px;
+    ion-button {
+      --ion-color-contrast: #fff!important;
+      color: #fff;
+      height: 40px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      --border-radius: 0;
+    }
+  }
+}
+.picker-columns.sc-ion-picker-ios {
+  --background: red;
+}
+.picker-above-highlight.sc-ion-picker-ios {
+  left: 0;
+  top: 0;
+  -webkit-transform: translateZ(90px);
+  transform: translateZ(90px);
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 81px;
+  border-bottom: 1px solid var(--border-color);
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(20%,var(--background,var(--ion-background-color,#fff))),to(rgba(var(--background-rgb,var(--ion-background-color-rgb,255,255,255)),.8)));
+  background: linear-gradient(180deg,var(--background,var(--ion-background-color,#fff)) 20%,rgba(var(--background-rgb,var(--ion-background-color-rgb,255,255,255)),.8));
+  z-index: 10;
 }

@@ -3,7 +3,6 @@
 @import '~@ionic/angular/css/normalize.css';
 @import '~@ionic/angular/css/structure.css';
 @import '~@ionic/angular/css/typography.css';
-
 @import '~@ionic/angular/css/padding.css';
 @import '~@ionic/angular/css/float-elements.css';
 @import '~@ionic/angular/css/text-alignment.css';
@@ -11,8 +10,34 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 app-main-popover {
-  background: #fff!important;
+  background: #fff !important;
+
   ion-list {
     --ion-background-color: #fff;
+  }
+}
+
+.picker-above-highlight.sc-ion-picker-ios,
+.picker-below-highlight.sc-ion-picker-ios {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.sc-ion-picker-ios {
+  color: #fff;
+}
+
+.monthview-container {
+  height: auto !important;
+}
+
+monthview {
+  ion-list {
+    display: none;
+  }
+}
+monthview table{
+  background: #fff!important;
+  .text-muted {
+    background: #f5f5f5 !important;
   }
 }
