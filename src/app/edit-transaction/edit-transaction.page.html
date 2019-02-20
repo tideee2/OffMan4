@@ -8,19 +8,19 @@
   <form [formGroup]="transactionForm">
     <ion-item no-padding lines="full">
       <ion-label>Select type</ion-label>
-      <ion-select formControlName="transactionType" name="transactionType" [(ngModel)]="tempTransaction.type">
+      <ion-select formControlName="type" name="type" [(ngModel)]="tempTransaction.type">
         <ion-select-option value="decrease" [selected]="true">Outcoming</ion-select-option>
         <ion-select-option value="increase">Incoming</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-item *ngIf="transactionType.value === 'decrease'" no-padding >
+    <ion-item *ngIf="type.value === 'decrease'" no-padding >
       <ion-label>Select category</ion-label>
       <ion-select formControlName="category" name="category" [(ngModel)]="tempTransaction.category">
         <ion-select-option value="{{x}}" *ngFor="let x of listOfCategories.slice(0,-1)">{{x}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item *ngIf="transactionType.value === 'increase'" hidden no-padding>
+    <ion-item *ngIf="type.value === 'increase'" hidden no-padding>
       <ion-label>Select category</ion-label>
       <!--<ion-input formControlName="category" name="category" value="{{listOfIncrease[0]}}"></ion-input>-->
       <ion-input formControlName="category" name="category" value="'increase'"></ion-input>
@@ -29,11 +29,11 @@
     <div class="input-container">
       <ion-item no-padding lines="full">
         <ion-label>Price</ion-label>
-        <ion-input name="cost" formControlName="cost" placeholder="" type="number"></ion-input>
+        <ion-input name="cost" formControlName="cost" placeholder="" type="number" [(ngModel)]="tempTransaction.cost"></ion-input>
       </ion-item>
       <ion-item no-padding lines="full">
         <ion-label>Comment</ion-label>
-        <ion-input name="description" formControlName="description"></ion-input>
+        <ion-input name="description" formControlName="description" [(ngModel)]="tempTransaction.description"></ion-input>
       </ion-item>
       <ion-row>
         <ion-col *ngIf="cost.invalid && (cost.dirty || cost.touched)" color="danger"
@@ -45,6 +45,14 @@
         <ion-col *ngIf="description.invalid && (description.dirty || description.touched)" color="danger"
                  class="alert alert-danger">
           <span class="text-ios-danger">{{ errorSrv.getErrorMessage(transactionForm, 'description', validation_messages) }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item no-padding no-margin>
+            <ion-label>Chose date</ion-label>
+            <ion-datetime formControlName="date" displayFormat="MM/DD/YYYY" name="date" [(ngModel)]="tempTransaction.date"></ion-datetime>
+          </ion-item>
         </ion-col>
       </ion-row>
     </div>

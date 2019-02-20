@@ -101,7 +101,7 @@ export class AddTransactionPage implements OnInit {
             category: this.transactionType.value === 'decrease' ? this.category.value : 'increase',
             type: this.transactionType.value,
             description: this.description.value,
-            date: new Date()
+            date: (new Date()).toISOString()
         });
         console.log(temp);
         this.storageSrv.balance = this.storageSrv.balance + ((this.transactionType.value === 'decrease') ? -1 : 1) * this.cost.value;

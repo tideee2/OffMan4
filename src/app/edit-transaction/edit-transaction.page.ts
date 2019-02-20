@@ -20,7 +20,8 @@ export class EditTransactionPage implements OnInit {
     listOfIncrease = Vars.incoming;
     transactionTypeDefaultValue = 'decrease';
     categoryDefaultValue = 'others';
-    tempTransaction = {};
+    tempTransaction: any;
+    oldTransaction: any;
 
     constructor(public navCtrl: NavController,
                 public errorSrv: ErrorsService,
@@ -30,7 +31,7 @@ export class EditTransactionPage implements OnInit {
                 public route: ActivatedRoute
     ) {
         this.transactionForm = this.formBuilder.group({
-            transactionType: ['', Validators.required],
+            type: ['', Validators.required],
             cost: ['', Validators.compose([
                 Validators.required,
                 Validators.pattern('^(\\d*\\.)?\\d+$')
@@ -57,36 +58,40 @@ export class EditTransactionPage implements OnInit {
             },
         };
         this.tempTransaction = this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')];
-        console.log(this.tempTransaction);
+        this.storageSrv.balance += (this.tempTransaction.type === 'decrease' ? 1 : -1) * this.tempTransaction.cost;
 
         // @todo remove ts-ignore
 
+        // // @ts-ignore
+        // this.transactionForm.controls.type.value = this.tempTransaction.type;
+        // // @ts-ignore
+        // this.transactionForm.controls.category.value = this.tempTransaction.category;
+        // // @ts-ignore
+        // this.transactionForm.controls.cost.value = this.tempTransaction.cost;
+        // // @ts-ignore
+        // this.transactionForm.controls.description.value = this.tempTransaction.description;
+        // // @ts-ignore
+        // this.transactionForm.controls.date.value = this.tempTransaction.date;
+
         // @ts-ignore
-        this.transactionForm.controls.transactionType.value = this.tempTransaction.type;
-        // @ts-ignore
-        this.transactionForm.controls.category.value = this.tempTransaction.category;
-        // @ts-ignore
-        this.transactionForm.controls.cost.value = this.tempTransaction.cost;
-        // @ts-ignore
-        this.transactionForm.controls.description.value = this.tempTransaction.description;
-        // @ts-ignore
-        this.transactionForm.controls.date.value = this.tempTransaction.date;
+        this.transactionForm.controls.date.value = new Date(this.tempTransaction.date);
+        console.log(this.transactionForm.controls);
     }
 
     ngOnInit() {
-        console.log('qq');
+        console.log('Edit transaction');
     }
 
     get cost() {
         return this.transactionForm.get('cost');
     }
 
-    get transactionType() {
-        return this.transactionForm.get('transactionType');
+    get type() {
+        return this.transactionForm.get('type');
     }
 
-    set transactionType(val) {
-        this.transactionForm.value.transactionType = val;
+    set type(val) {
+        this.transactionForm.value.type = val;
     }
 
     get description() {
@@ -122,19 +127,15 @@ export class EditTransactionPage implements OnInit {
     }
 
     submitPurchase(): void {
-        console.log(this.transactionForm);
-        const temp = this.storageSrv.transactions;
-        console.log(temp);
-        temp.unshift({
-            cost: this.cost.value,
-            category: this.transactionType.value === 'decrease' ? this.category.value : 'increase',
-            type: this.transactionType.value,
-            description: this.description.value,
-            date: new Date()
-        });
-        console.log(temp);
-        this.storageSrv.balance = this.storageSrv.balance + ((this.transactionType.value === 'decrease') ? -1 : 1) * this.cost.value;
-        this.storageSrv.transactions = temp;
+        const oldTransactions = this.storageSrv.transactions;
+
+        oldTransactions[this.route.snapshot.paramMap.get('index')] = this.transactionForm.value;
+        this.storageSrv.balance += (this.type.value === 'decrease' ? -1 : 1) * this.cost.value;
+        this.storageSrv.transactions = oldTransactions;
+        if (!this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category) {
+            this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category = 'increase';
+        }
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
+
     }
 }
