@@ -12,6 +12,7 @@ export class StorageService {
   _username: string;
   _balance: number;
   _transactions: any[];
+  _tags: any;
 
   constructor(public storage: Storage) {
     console.log('Init StorageService');
@@ -19,12 +20,14 @@ export class StorageService {
       Promise.all([
         this.storage.get('username'),
         this.storage.get('balance'),
-        this.storage.get('transactions')
+        this.storage.get('transactions'),
+        this.storage.get('tags')
       ]).then(results => {
         console.log(results);
         this._username = results[0];
         this._balance = results[1];
         this._transactions = results[2];
+        this._tags = results[3];
       });
     }).catch(err => console.log(err));
   }
@@ -56,5 +59,15 @@ export class StorageService {
   set transactions(value: any[]) {
     this.storage.set('transactions', value);
     this._transactions = value;
+  }
+
+  get tags(): any {
+    return this._tags;
+  }
+
+  set tags(value: any) {
+    console.log('storage save tags');
+    this.storage.set('tags', value);
+    this._tags = value || {};
   }
 }

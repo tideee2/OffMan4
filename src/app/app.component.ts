@@ -26,6 +26,7 @@ export class AppComponent {
       console.log(localStorage.getItem('isOpen'));
       if (!localStorage.getItem('isOpen')) {
         this.storage.transactions = <any>[];
+        this.storage.tags = {tea: 1, coffee: 1, water: 1};
         this.storage.balance = 0;
         this.storage.username = 'Petya';
         localStorage.setItem('isOpen', 'true');

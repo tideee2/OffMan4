@@ -18,6 +18,9 @@ export class AddTransactionPage implements OnInit {
     listOfIncrease = Vars.incoming;
     transactionTypeDefaultValue = 'decrease';
     categoryDefaultValue = 'others';
+    public tags = '';
+    public tagsArray = [];
+    public chosenTags = [];
 
     constructor(public navCtrl: NavController,
                 public errorSrv: ErrorsService,
@@ -52,8 +55,14 @@ export class AddTransactionPage implements OnInit {
         };
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         console.log('qq');
+        setTimeout(() => {
+            this.displayChips();
+        }, 300);
+    }
+
+    ionViewWillEnter() {
     }
 
     get cost() {
@@ -101,11 +110,69 @@ export class AddTransactionPage implements OnInit {
             category: this.transactionType.value === 'decrease' ? this.category.value : 'increase',
             type: this.transactionType.value,
             description: this.description.value,
-            date: (new Date()).toISOString()
+            date: (new Date()).toISOString(),
+            tags: this.tagsArray.map(tag => tag.chosen ? tag.name : '')
         });
         console.log(temp);
         this.storageSrv.balance = this.storageSrv.balance + ((this.transactionType.value === 'decrease') ? -1 : 1) * this.cost.value;
         this.storageSrv.transactions = temp;
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
+    }
+
+    test() {
+        this.displayChips();
+    }
+
+    displayChips() {
+        let localTags = this.tags.replace(/([^A-Za-zА-Яа-я]+)/g, '$1§sep§').split('§sep§');
+        localTags = localTags.filter(tag => tag !== '');
+        localTags = localTags.map(tag => {
+            return tag.replace(/\s/g, '');
+        });
+        console.log(localTags);
+        console.log(this.storageSrv.tags);
+        const temp = this.storageSrv.tags;
+
+        localTags.forEach(tag => {
+            if (temp.hasOwnProperty(tag)) {
+                temp[tag]++;
+            } else {
+                temp[tag] = 1;
+            }
+        });
+        if (temp.hasOwnProperty('')) {
+            delete temp[''];
+        }
+        for (const tag in temp) {
+            if (this.tagsArray.find(element => element.name === tag)) {
+                this.tagsArray.find(element => element.name === tag);
+            } else {
+                this.tagsArray.push({
+                    name: tag,
+                    value: temp[tag],
+                    chosen: 0
+                });
+            }
+        }
+        this.tagsArray.sort(((a, b) => b.value - a.value));
+
+        this.storageSrv.tags = temp;
+        console.log(this.tagsArray);
+    }
+
+    choseTag(tag) {
+        // if (this.chosenTags.find( element => element.name === tag.name)) {
+        //     this.chosenTags.splice(this.chosenTags.indexOf(tag), 1);
+        // } else {
+        //     this.chosenTags.push(tag);
+        // }
+        let tempTag = this.tagsArray.find(element => element.name === tag.name);
+        tempTag.chosen = !tempTag.chosen;
+        console.log(this.tagsArray.filter(element => element.name !== ''));
+        this.tags = this.tagsArray.map(element => element.chosen ? element.name : '').join(' ');
+        this.tags = this.tags.trim();
+        this.tags = this.tags.replace(/ +(?= )/g, '');
+
+        console.log(this.tags);
     }
 }

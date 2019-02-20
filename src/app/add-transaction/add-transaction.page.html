@@ -49,7 +49,34 @@
       </ion-row>
     </div>
   </form>
-
+  <div *ngIf="transactionType.value == 'decrease'">
+    <ion-row>
+      <ion-col>
+        <ion-chip
+                *ngFor="let tag of tagsArray"
+                color="orange"
+                [class.chip-selected]="tag.chosen"
+                (click)="choseTag(tag)">
+          <ion-label>
+            {{tag.name}}
+          </ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="10">
+        <ion-item no-padding lines="full">
+          <ion-label position="floating">Tags</ion-label>
+          <ion-input name="tags" [(ngModel)]="tags"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="1" class="add-tag-col">
+        <ion-button (click)="test()" size="small" color="orange" fill="outline">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
     <ion-row class="btn-container">
       <ion-col size="6">
         <ion-button expand="block" fill="clear" shape="" (click)="cancel()">Cancel</ion-button>

@@ -44,5 +44,12 @@ ion-content {
       font-size: 0.7rem;
     }
   }
-
+}
+.add-tag-col {
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+}
+.chip-selected {
+  border: 1px solid #f9aa33;
 }
