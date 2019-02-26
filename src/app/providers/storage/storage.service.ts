@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {TransactionModel} from '../../models/transaction';
 import { Storage } from '@ionic/storage';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class StorageService {
   _balance: number;
   _transactions: any[];
   _tags: any;
-
+  q: any;
   constructor(public storage: Storage) {
     console.log('Init StorageService');
     this.storage.ready().then(ok => {
@@ -30,6 +31,21 @@ export class StorageService {
         this._tags = results[3];
       });
     }).catch(err => console.log(err));
+    this.q = new Observable( observer => {
+      console.log('hello');
+      observer.next(this.storage.get('tags'));
+      observer.complete();
+    });
+  }
+
+  getTags() {
+    const tagsObservable = new Observable(observer => {
+      this.storage.get('tags').then(data => {
+        observer.next(data);
+      });
+    });
+
+    return tagsObservable;
   }
 
   get username(): string {

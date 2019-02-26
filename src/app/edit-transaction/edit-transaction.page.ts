@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Vars} from '../../config/settings';
 import {NavController} from '@ionic/angular';
 import {ErrorsService} from '../providers/errors/errors.service';
 import {StorageService} from '../providers/storage/storage.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TagsComponent} from '../components/tags/tags.component';
 
 @Component({
     selector: 'app-edit-transaction',
@@ -22,6 +23,11 @@ export class EditTransactionPage implements OnInit {
     categoryDefaultValue = 'others';
     tempTransaction: any;
     oldTransaction: any;
+    oldBalance: any;
+    public tags = '';
+    public tagsArray = [];
+    public chosenTags = [];
+    @ViewChild(TagsComponent) tagsReference;
 
     constructor(public navCtrl: NavController,
                 public errorSrv: ErrorsService,
@@ -58,20 +64,11 @@ export class EditTransactionPage implements OnInit {
             },
         };
         this.tempTransaction = this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')];
-        this.storageSrv.balance += (this.tempTransaction.type === 'decrease' ? 1 : -1) * this.tempTransaction.cost;
-
+        // this.tempTransaction.tags =  this.removeSpaces(this.tempTransaction.tags);
+        this.tagsArray = this.tempTransaction.tags;
+        this.oldBalance = (this.tempTransaction.type === 'decrease' ? 1 : -1) * this.tempTransaction.cost;
+        console.log(this.tagsArray);
         // @todo remove ts-ignore
-
-        // // @ts-ignore
-        // this.transactionForm.controls.type.value = this.tempTransaction.type;
-        // // @ts-ignore
-        // this.transactionForm.controls.category.value = this.tempTransaction.category;
-        // // @ts-ignore
-        // this.transactionForm.controls.cost.value = this.tempTransaction.cost;
-        // // @ts-ignore
-        // this.transactionForm.controls.description.value = this.tempTransaction.description;
-        // // @ts-ignore
-        // this.transactionForm.controls.date.value = this.tempTransaction.date;
 
         // @ts-ignore
         this.transactionForm.controls.date.value = new Date(this.tempTransaction.date);
@@ -128,14 +125,69 @@ export class EditTransactionPage implements OnInit {
 
     submitPurchase(): void {
         const oldTransactions = this.storageSrv.transactions;
-
-        oldTransactions[this.route.snapshot.paramMap.get('index')] = this.transactionForm.value;
-        this.storageSrv.balance += (this.type.value === 'decrease' ? -1 : 1) * this.cost.value;
+        oldTransactions[this.route.snapshot.paramMap.get('index')] = {...this.transactionForm.value, tags: this.tagsReference.purchaseTags};
+        this.storageSrv.balance += this.oldBalance + (this.type.value === 'decrease' ? -1 : 1) * this.cost.value;
         this.storageSrv.transactions = oldTransactions;
         if (!this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category) {
             this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category = 'increase';
         }
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
+    }
 
+    test() {
+        this.displayChips();
+    }
+
+    displayChips() {
+        let localTags = this.tags.replace(/([^A-Za-zА-Яа-я]+)/g, '$1§sep§').split('§sep§');
+        localTags = localTags.filter(tag => tag !== '');
+        localTags = localTags.map(tag => {
+            return tag.replace(/\s/g, '');
+        });
+        console.log(localTags);
+        console.log(this.storageSrv.tags);
+        const temp = this.storageSrv.tags;
+
+        localTags.forEach(tag => {
+            if (temp.hasOwnProperty(tag)) {
+                temp[tag]++;
+            } else {
+                temp[tag] = 1;
+            }
+        });
+        if (temp.hasOwnProperty('')) {
+            delete temp[''];
+        }
+        for (const tag in temp) {
+            if (this.tagsArray.find(element => element.name === tag)) {
+                this.tagsArray.find(element => element.name === tag);
+            } else {
+                this.tagsArray.push({
+                    name: tag,
+                    value: temp[tag],
+                    chosen: 0
+                });
+            }
+        }
+        this.tagsArray.sort(((a, b) => b.value - a.value));
+
+        this.storageSrv.tags = temp;
+        console.log(this.tagsArray);
+    }
+
+    choseTag(tag) {
+
+        let tempTag = this.tagsArray.find(element => element.name === tag.name);
+        tempTag.chosen = !tempTag.chosen;
+        console.log(this.tagsArray.filter(element => element.name !== ''));
+        this.tags = this.tagsArray.map(element => element.chosen ? element.name : '').join(' ');
+        this.tags = this.tags.trim();
+        this.tags = this.tags.replace(/ +(?= )/g, '');
+
+        console.log(this.tags);
+    }
+
+    removeSpaces(arr) {
+        // return arr.filter(el => el !== '');
     }
 }

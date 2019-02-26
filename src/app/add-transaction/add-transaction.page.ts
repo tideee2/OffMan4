@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {Vars} from '../../config/settings';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ErrorsService} from '../providers/errors/errors.service';
 import {StorageService} from '../providers/storage/storage.service';
+import {TagsComponent} from '../components/tags/tags.component';
+// import {TagsComponent} from '../components/tags/tags.component';
 
 @Component({
     selector: 'app-add-transaction',
@@ -21,6 +23,9 @@ export class AddTransactionPage implements OnInit {
     public tags = '';
     public tagsArray = [];
     public chosenTags = [];
+    public allTags = [];
+    public purchaseTags = [];
+    @ViewChild(TagsComponent) tagsReference;
 
     constructor(public navCtrl: NavController,
                 public errorSrv: ErrorsService,
@@ -53,16 +58,11 @@ export class AddTransactionPage implements OnInit {
                 maxlength: 'Description cannot be more than 20 characters long'
             },
         };
+        this.allTags = this.storageSrv.tags;
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         console.log('qq');
-        setTimeout(() => {
-            this.displayChips();
-        }, 300);
-    }
-
-    ionViewWillEnter() {
     }
 
     get cost() {
@@ -111,9 +111,10 @@ export class AddTransactionPage implements OnInit {
             type: this.transactionType.value,
             description: this.description.value,
             date: (new Date()).toISOString(),
-            tags: this.tagsArray.map(tag => tag.chosen ? tag.name : '')
+            tags: this.tagsReference.purchaseTags
         });
         console.log(temp);
+        console.log(this.purchaseTags);
         this.storageSrv.balance = this.storageSrv.balance + ((this.transactionType.value === 'decrease') ? -1 : 1) * this.cost.value;
         this.storageSrv.transactions = temp;
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
@@ -166,7 +167,7 @@ export class AddTransactionPage implements OnInit {
         // } else {
         //     this.chosenTags.push(tag);
         // }
-        let tempTag = this.tagsArray.find(element => element.name === tag.name);
+        const tempTag = this.tagsArray.find(element => element.name === tag.name);
         tempTag.chosen = !tempTag.chosen;
         console.log(this.tagsArray.filter(element => element.name !== ''));
         this.tags = this.tagsArray.map(element => element.chosen ? element.name : '').join(' ');

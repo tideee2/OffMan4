@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { AddTransactionPage } from './add-transaction.page';
+import {TagsComponent} from '../components/tags/tags.component';
+import {ComponentsModule} from '../components/shared.module';
 
 const routes: Routes = [
   {
@@ -20,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [AddTransactionPage]

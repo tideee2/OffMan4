@@ -57,7 +57,10 @@
       </ion-row>
     </div>
   </form>
-
+  <app-tags
+          *ngIf="type.value == 'decrease'"
+          [purchaseTags]="tempTransaction.tags"
+  ></app-tags>
   <ion-row class="btn-container">
     <ion-col size="6">
       <ion-button expand="block" fill="clear" shape="" (click)="cancel()">Cancel</ion-button>
