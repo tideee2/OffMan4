@@ -124,8 +124,10 @@ export class EditTransactionPage implements OnInit {
     }
 
     submitPurchase(): void {
+        console.log(this.tagsReference);
         const oldTransactions = this.storageSrv.transactions;
-        oldTransactions[this.route.snapshot.paramMap.get('index')] = {...this.transactionForm.value, tags: this.tagsReference.purchaseTags};
+        oldTransactions[this.route.snapshot.paramMap.get('index')] = {...this.transactionForm.value,
+            tags: (this.type.value === 'decrease') ? this.tagsReference.purchaseTags : ''};
         this.storageSrv.balance += this.oldBalance + (this.type.value === 'decrease' ? -1 : 1) * this.cost.value;
         this.storageSrv.transactions = oldTransactions;
         if (!this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category) {

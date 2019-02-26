@@ -28,8 +28,14 @@ export class FilterPage implements OnInit {
     }
 
     submitFilter() {
+
         console.log(this.dateFrom);
         console.log(this.dateTo);
         console.log(this.category);
+        this.modalCtrl.dismiss({
+            dateFrom: this.dateFrom,
+            dateTo: this.dateTo,
+            category: this.category
+        });
     }
 }

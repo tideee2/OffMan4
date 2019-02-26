@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {ModalController, NavController, PopoverController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {FilterPage} from '../filter/filter.page';
+import {StorageService} from '../providers/storage/storage.service';
+import {TransactionModel} from '../models/transaction';
+import {EventEmitter} from 'events';
 
 @Component({
     selector: 'app-main-popover',
@@ -9,12 +12,13 @@ import {FilterPage} from '../filter/filter.page';
     styleUrls: ['./main-popover.component.scss']
 })
 export class MainPopoverComponent implements OnInit {
-
+    // @Output() changeFilter: EventEmitter<any> = new EventEmitter();
     constructor(
         public popoverCtrl: PopoverController,
         public navCtrl: NavController,
         public router: Router,
-        public modalCtrl: ModalController
+        public modalCtrl: ModalController,
+        public storageSrv: StorageService
     ) {
     }
 
@@ -53,6 +57,15 @@ export class MainPopoverComponent implements OnInit {
             componentProps: { value: 123 }
         });
         this.close();
-        return await modal.present();
+        await modal.present();
+        const { data } = await modal.onWillDismiss();
+        console.log(data);
+        // if (!data) {
+        //     this.storageSrv.filteredTransactions = this.storageSrv.transactions.filter((transaction: TransactionModel) => {
+        //         return transaction.date > data.dateFrom && transaction.date < data.dateTo && !!~data.indexOf(transaction.category);
+        //     });
+        // }
+        // this.changeFilter.emit('filter:ok', data);
+        return data;
     }
 }

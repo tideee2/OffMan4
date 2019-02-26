@@ -33,7 +33,6 @@ export class AddTransactionPage implements OnInit {
                 public formBuilder: FormBuilder,
     ) {
         this.transactionForm = this.formBuilder.group({
-            transactionType: ['', Validators.required],
             cost: ['', Validators.compose([
                 Validators.required,
                 Validators.pattern('^(\\d*\\.)?\\d+$')
@@ -69,14 +68,6 @@ export class AddTransactionPage implements OnInit {
         return this.transactionForm.get('cost');
     }
 
-    get transactionType() {
-        return this.transactionForm.get('transactionType');
-    }
-
-    set transactionType(val) {
-        this.transactionForm.value.transactionType = val;
-    }
-
     get description() {
         return this.transactionForm.get('description');
     }
@@ -106,74 +97,18 @@ export class AddTransactionPage implements OnInit {
         const temp = this.storageSrv.transactions;
         console.log(temp);
         temp.unshift({
+            type: 'decrease',
             cost: this.cost.value,
-            category: this.transactionType.value === 'decrease' ? this.category.value : 'increase',
-            type: this.transactionType.value,
+            category: this.category.value,
             description: this.description.value,
             date: (new Date()).toISOString(),
             tags: this.tagsReference.purchaseTags
         });
         console.log(temp);
         console.log(this.purchaseTags);
-        this.storageSrv.balance = this.storageSrv.balance + ((this.transactionType.value === 'decrease') ? -1 : 1) * this.cost.value;
+        this.storageSrv.balance = this.storageSrv.balance + (-1) * this.cost.value;
         this.storageSrv.transactions = temp;
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
     }
 
-    test() {
-        this.displayChips();
-    }
-
-    displayChips() {
-        let localTags = this.tags.replace(/([^A-Za-zА-Яа-я]+)/g, '$1§sep§').split('§sep§');
-        localTags = localTags.filter(tag => tag !== '');
-        localTags = localTags.map(tag => {
-            return tag.replace(/\s/g, '');
-        });
-        console.log(localTags);
-        console.log(this.storageSrv.tags);
-        const temp = this.storageSrv.tags;
-
-        localTags.forEach(tag => {
-            if (temp.hasOwnProperty(tag)) {
-                temp[tag]++;
-            } else {
-                temp[tag] = 1;
-            }
-        });
-        if (temp.hasOwnProperty('')) {
-            delete temp[''];
-        }
-        for (const tag in temp) {
-            if (this.tagsArray.find(element => element.name === tag)) {
-                this.tagsArray.find(element => element.name === tag);
-            } else {
-                this.tagsArray.push({
-                    name: tag,
-                    value: temp[tag],
-                    chosen: 0
-                });
-            }
-        }
-        this.tagsArray.sort(((a, b) => b.value - a.value));
-
-        this.storageSrv.tags = temp;
-        console.log(this.tagsArray);
-    }
-
-    choseTag(tag) {
-        // if (this.chosenTags.find( element => element.name === tag.name)) {
-        //     this.chosenTags.splice(this.chosenTags.indexOf(tag), 1);
-        // } else {
-        //     this.chosenTags.push(tag);
-        // }
-        const tempTag = this.tagsArray.find(element => element.name === tag.name);
-        tempTag.chosen = !tempTag.chosen;
-        console.log(this.tagsArray.filter(element => element.name !== ''));
-        this.tags = this.tagsArray.map(element => element.chosen ? element.name : '').join(' ');
-        this.tags = this.tags.trim();
-        this.tags = this.tags.replace(/ +(?= )/g, '');
-
-        console.log(this.tags);
-    }
 }

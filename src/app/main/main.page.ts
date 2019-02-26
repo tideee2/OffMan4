@@ -7,6 +7,7 @@ import {MessagesService} from '../providers/messages/messages.service';
 import {FilterPage} from '../filter/filter.page';
 import {MainPopoverComponent} from '../main-popover/main-popover.component';
 import {Router} from '@angular/router';
+import {EventEmitter} from 'events';
 
 @Component({
     selector: 'app-main',
@@ -19,6 +20,7 @@ export class MainPage implements OnInit {
     public listOfCategories = Vars.categories;
     public listOfColors = Vars.catColors;
     public showEditButton: boolean;
+    someEvent: EventEmitter<any> = new EventEmitter();
 
     constructor(public navCtrl: NavController,
                 public storageSrv: StorageService,
@@ -143,9 +145,15 @@ export class MainPage implements OnInit {
             inputs: [
                 {
                     name: 'balance',
-                    type: 'text',
+                    type: 'number',
                     id: 'balance',
-                    placeholder: '',
+                    placeholder: 'balance',
+                },
+                {
+                    name: 'description',
+                    type: 'text',
+                    id: 'description',
+                    placeholder: 'description',
                 },
             ],
             buttons: [
@@ -160,6 +168,18 @@ export class MainPage implements OnInit {
                     text: 'Ok',
                     handler: (data) => {
                        this.storageSrv.balance += 1 * data.balance;
+                       const temp = this.storageSrv.transactions;
+                       temp.push({
+                           type: 'increase',
+                           category: 'increase',
+                           cost: data.balance,
+                           description: data.description,
+                           date: (new Date()).toISOString(),
+                       });
+                       temp.sort((a, b) => a - b);
+                       // @todo remove transaction duplicate
+                       this.storageSrv.transactions = temp;
+                       this.transactions = temp;
                        // this.balance += 1 * data.balance;
                     }
                 }

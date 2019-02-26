@@ -15,6 +15,7 @@ export class StorageService {
   _transactions: any[];
   _tags: any;
   q: any;
+  filteredTransactions = [];
   constructor(public storage: Storage) {
     console.log('Init StorageService');
     this.storage.ready().then(ok => {
