@@ -1,6 +1,9 @@
-calendar,
-calendar .monthview-container {
-
+ion-header {
+  --ion-toolbar-background: #344955;
+  --ion-toolbar-color: #fff;
+  ion-buttons {
+    --ion-color-primary: #fff;
+  }
 }
 ::ng-deep .monthview-primary-with-event {
   background: #f9aa33!important;
@@ -14,5 +17,19 @@ ion-card{
   ion-card-content,
   ion-card-header{
     color: #fff;
+  }
+}
+.calendar-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  .arrows {
+    margin: 0 10px;
+    font-size: 2rem;
+  }
+  .month-name {
+    color: #fff;
+    font-size: 1.3rem;
   }
 }

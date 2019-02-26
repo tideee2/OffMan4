@@ -10,7 +10,8 @@
 <ion-content no-padding>
     <ion-card color="" no-padding no-margin class="balance-container">
         <ion-card-content>
-            <p>Balance: {{balance}}</p>
+            <p>Balance: {{storageSrv.balance}}</p>
+            <p (click)="addMoney()"><ion-icon name="add"></ion-icon></p>
         </ion-card-content>
     </ion-card>
     <ion-list class="product-list" padding-horizontal>

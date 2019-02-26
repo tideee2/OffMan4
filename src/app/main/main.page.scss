@@ -24,12 +24,17 @@ ion-content{
   }
   .balance-container {
     height: 20vh;
-    align-items: center;
-    justify-content: center;
-    display: flex;
     ion-card-content {
+      align-items: center;
+      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
       p {
+        font-size: 2rem;
+      }
+      ion-icon {
         font-size: 3rem;
+        font-weight: bold;
       }
     }
   }
@@ -145,3 +150,4 @@ ion-card {
     color: #006500;
   }
 }
+

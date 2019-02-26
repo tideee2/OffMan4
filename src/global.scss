@@ -41,3 +41,10 @@ monthview table{
     background: #f5f5f5 !important;
   }
 }
+.alert-wrapper {
+  .alert-input-wrapper {
+    .alert-input.sc-ion-alert-ios {
+      --ion-background-color: #fff;
+    }
+  }
+}

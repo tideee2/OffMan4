@@ -1,10 +1,16 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start"> <ion-back-button defaultHref="main"></ion-back-button> </ion-buttons>
     <ion-title>calendar</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <div class="calendar-buttons">
+    <ion-icon class="arrows" name="md-arrow-dropleft" color="orange" (click)="prevMonth()"></ion-icon>
+    <span class="month-name">{{monthName}}</span>
+    <ion-icon class="arrows" name="md-arrow-dropright" color="orange" (click)="nextMonth()"></ion-icon>
+  </div>
   <ng-template #template let-view="view" let-row="row" let-col="col">
     {{view.dates[row*7+col].label}}
   </ng-template>

@@ -136,4 +136,35 @@ export class MainPage implements OnInit {
         });
         return await popover.present();
     }
+
+    async addMoney() {
+        const alert = await this.alertCtrl.create({
+            header: 'Incoming',
+            inputs: [
+                {
+                    name: 'balance',
+                    type: 'text',
+                    id: 'balance',
+                    placeholder: '',
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        console.log('Confirm Cancel');
+                    }
+                }, {
+                    text: 'Ok',
+                    handler: (data) => {
+                       this.storageSrv.balance += 1 * data.balance;
+                       // this.balance += 1 * data.balance;
+                    }
+                }
+            ]
+        });
+        await alert.present();
+    }
 }

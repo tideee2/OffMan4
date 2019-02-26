@@ -1,0 +1,16 @@
+.add-tag-col {
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+}
+
+.chip-selected {
+  border: 1px solid #f9aa33;
+}
+
+ion-item {
+  ion-label,
+  ion-input {
+    color: #fff;
+  }
+}

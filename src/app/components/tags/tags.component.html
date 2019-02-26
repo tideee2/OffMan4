@@ -1,0 +1,31 @@
+<div>
+  <ion-row>
+    <ion-col>
+      <ion-chip
+              *ngFor="let tag of tagsArray; let i=index"
+              color="orange"
+              [class.chip-selected]="tag.chosen && !mode"
+              (click)="chooseTag(tag, i)">
+        <ion-label>
+         {{tag.name}}
+        </ion-label>
+        <ion-icon name="close" *ngIf="mode" (click)="deleteGlobalTag(tag)"></ion-icon>
+      </ion-chip>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="!mode">
+    <ion-col size="10">
+      <form [formGroup]="form">
+        <ion-item no-padding lines="full">
+          <ion-label position="floating">Tags</ion-label>
+          <ion-input formControlName="tags" name="tags" [(ngModel)]="tagsString"></ion-input>
+        </ion-item>
+      </form>
+    </ion-col>
+    <ion-col size="1" class="add-tag-col">
+      <ion-button (click)="addTag()" size="small" color="orange" fill="outline">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</div>
