@@ -44,5 +44,11 @@ ion-content {
       font-size: 0.7rem;
     }
   }
-
+  .transaction-type{
+    display: flex;
+    justify-content: space-between;
+    ion-label:last-child{
+      text-align: right;
+    }
+  }
 }

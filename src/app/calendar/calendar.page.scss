@@ -33,3 +33,26 @@ ion-card{
     font-size: 1.3rem;
   }
 }
+.balance {
+  ion-card-content {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.purchase-list {
+  ion-card-header {
+    text-align: center;
+    border-bottom: 1px solid #f9aa33;
+  }
+  ion-card-content {
+    ion-row {
+      border-bottom: 1px solid #f9aa33;
+      padding:10px 0;
+    }
+  }
+}
+.col-left {
+  border-left-width: 4px;
+  border-left-style: solid;
+  //padding: 0 8px;
+}

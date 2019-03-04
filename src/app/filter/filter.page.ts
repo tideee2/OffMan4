@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ModalController, NavController, NavParams} from '@ionic/angular';
 import {Vars} from '../../config/settings';
 import {Router} from '@angular/router';
+import {StorageService} from '../providers/storage/storage.service';
 
 @Component({
     selector: 'app-filter',
@@ -17,6 +18,7 @@ export class FilterPage implements OnInit {
     constructor(
         public navCtrl: NavController,
         public router: Router,
+        public storageSrv: StorageService,
         public modalCtrl: ModalController) {
     }
 
@@ -29,13 +31,11 @@ export class FilterPage implements OnInit {
 
     submitFilter() {
 
-        console.log(this.dateFrom);
-        console.log(this.dateTo);
-        console.log(this.category);
-        this.modalCtrl.dismiss({
+        this.storageSrv.changeFilter$.emit('filter:change', {
             dateFrom: this.dateFrom,
             dateTo: this.dateTo,
             category: this.category
         });
+        this.modalCtrl.dismiss();
     }
 }

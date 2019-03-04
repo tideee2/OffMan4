@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertController, ModalController, NavController, PopoverController} from '@ionic/angular';
+import {AlertController, ModalController, NavController, Platform, PopoverController} from '@ionic/angular';
 import {StorageService} from '../providers/storage/storage.service';
 import {Storage} from '@ionic/storage';
 import {Vars} from '../../config/settings';
@@ -8,6 +8,9 @@ import {FilterPage} from '../filter/filter.page';
 import {MainPopoverComponent} from '../main-popover/main-popover.component';
 import {Router} from '@angular/router';
 import {EventEmitter} from 'events';
+import {TransactionModel} from '../models/transaction';
+import {toArray} from 'rxjs/operators';
+import {ToastShowService} from '../providers/toast-show/toast-show.service';
 
 @Component({
     selector: 'app-main',
@@ -21,22 +24,47 @@ export class MainPage implements OnInit {
     public listOfColors = Vars.catColors;
     public showEditButton: boolean;
     someEvent: EventEmitter<any> = new EventEmitter();
+    subscription: any;
+    showFilterCancel = false;
 
     constructor(public navCtrl: NavController,
+                private platform: Platform,
                 public storageSrv: StorageService,
                 public storage: Storage,
                 public messageSrv: MessagesService,
                 public alertCtrl: AlertController,
                 public modalCtrl: ModalController,
                 public popoverCtrl: PopoverController,
-                public router: Router
+                public router: Router,
+                public toastSrv: ToastShowService
     ) {
         // this.transactions = this.storageSrv.transaction;
         // console.log(this.storageSrv);
+        this.storageSrv.changeFilter$.addListener('filter:change', data => {
+            console.log(data);
 
+            this.showFilterCancel = true;
+            this.transactions = this.storageSrv.transactions.filter((transaction: TransactionModel) => {
+                const categoryQuery = (data.category) ? !!~data.category.indexOf(transaction.category) : true;
+                const dateFromQuery = (data.dateFrom) ? transaction.date > (new Date(data.dateFrom)).toISOString() : true;
+                const dateToQuery = (data.dateTo) ? transaction.date < (new Date(data.dateTo)).toISOString() : true;
+                console.log(categoryQuery + ':' + dateFromQuery + ':' + dateToQuery);
+                return categoryQuery && dateFromQuery && dateToQuery;
+            });
+        });
     }
 
     ngOnInit() {
+    }
+
+    ionViewDidEnter() {
+        this.subscription = this.platform.backButton.subscribe(() => {
+            navigator['app'].exitApp();
+        });
+    }
+
+    ionViewWillLeave() {
+        this.subscription.unsubscribe();
     }
 
     ionViewWillEnter() {
@@ -72,11 +100,14 @@ export class MainPage implements OnInit {
     delT(data: any) {
         const index = data.index;
         const temp = this.storageSrv.transactions;
-        this.balance = this.balance + (this.transactions[index].type === 'decrease' ? 1 : -1) * this.transactions[index].cost;
+        console.log(this.balance);
+        console.log((this.transactions[index].type === 'decrease' ? 1 : -1) * this.transactions[index].cost);
+        this.balance = this.storageSrv.balance +  (this.transactions[index].type === 'decrease' ? 1 : -1) * this.transactions[index].cost;
         this.storageSrv.balance = this.balance;
         temp.splice(index, 1);
         this.storageSrv.transactions = temp;
         this.transactions = temp;
+        console.log(this.balance);
     }
 
     async confirmAlert(title: string, messageText: string, data?: any) {
@@ -123,10 +154,11 @@ export class MainPage implements OnInit {
         }).catch(err => console.log(2));
         // this.navCtrl.navigateForward('/filter');
     }
+
     async presentModal() {
         const modal = await this.modalCtrl.create({
             component: FilterPage,
-            componentProps: { value: 123 }
+            componentProps: {value: 123}
         });
         return await modal.present();
     }
@@ -136,7 +168,7 @@ export class MainPage implements OnInit {
             component: MainPopoverComponent,
             event: event
         });
-        return await popover.present();
+        await popover.present();
     }
 
     async addMoney() {
@@ -167,24 +199,37 @@ export class MainPage implements OnInit {
                 }, {
                     text: 'Ok',
                     handler: (data) => {
-                       this.storageSrv.balance += 1 * data.balance;
-                       const temp = this.storageSrv.transactions;
-                       temp.push({
-                           type: 'increase',
-                           category: 'increase',
-                           cost: data.balance,
-                           description: data.description,
-                           date: (new Date()).toISOString(),
-                       });
-                       temp.sort((a, b) => a - b);
-                       // @todo remove transaction duplicate
-                       this.storageSrv.transactions = temp;
-                       this.transactions = temp;
-                       // this.balance += 1 * data.balance;
+                        if (!data.balance || !data.description) {
+                            this.toastSrv.showToast('balance or description is empty');
+                            return;
+                        }
+                        if (data.description.length < 5) {
+                            this.toastSrv.showToast('description is too short');
+                            return;
+                        }
+                        this.storageSrv.balance += 1 * data.balance;
+                        const temp = this.storageSrv.transactions || [];
+                        temp.push({
+                            type: 'increase',
+                            category: 'increase',
+                            cost: data.balance,
+                            description: data.description,
+                            date: (new Date()).toISOString(),
+                        });
+                        temp.sort((a, b) => a - b);
+                        // @todo remove transaction duplicate
+                        this.storageSrv.transactions = temp;
+                        this.transactions = temp;
+                        // this.balance += 1 * data.balance;
                     }
                 }
             ]
         });
         await alert.present();
+    }
+
+    cancelFilter() {
+        this.showFilterCancel = false;
+        this.transactions = this.storageSrv.transactions;
     }
 }

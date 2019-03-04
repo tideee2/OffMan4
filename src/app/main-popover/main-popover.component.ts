@@ -5,6 +5,7 @@ import {FilterPage} from '../filter/filter.page';
 import {StorageService} from '../providers/storage/storage.service';
 import {TransactionModel} from '../models/transaction';
 import {EventEmitter} from 'events';
+import {cordova} from '@ionic-native/core';
 
 @Component({
     selector: 'app-main-popover',
@@ -54,18 +55,13 @@ export class MainPopoverComponent implements OnInit {
     async openFilter() {
         const modal = await this.modalCtrl.create({
             component: FilterPage,
-            componentProps: { value: 123 }
+            componentProps: {value: 123}
         });
         this.close();
         await modal.present();
-        const { data } = await modal.onWillDismiss();
-        console.log(data);
-        // if (!data) {
-        //     this.storageSrv.filteredTransactions = this.storageSrv.transactions.filter((transaction: TransactionModel) => {
-        //         return transaction.date > data.dateFrom && transaction.date < data.dateTo && !!~data.indexOf(transaction.category);
-        //     });
-        // }
-        // this.changeFilter.emit('filter:ok', data);
-        return data;
+    }
+
+    exit() {
+        navigator['app'].exitApp();
     }
 }

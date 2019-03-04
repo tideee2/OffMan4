@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StorageService} from '../providers/storage/storage.service';
+import {Vars} from '../../config/settings';
 
 @Component({
     selector: 'app-calendar',
@@ -15,12 +16,14 @@ export class CalendarPage implements OnInit {
         mode: 'month',
         currentDate: this.selectedDay
     };
+    listOfColors = Vars.catColors;
     transactionsByMonth = [];
     transactionsAll = this.storageSrv.transactions || [];
     monthSum = 0;
     monthName = '';
     monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     currentMonth = 0;
+    year = 0;
 
     constructor(public storageSrv: StorageService) {
         this.transactionsByMonth = this.transactionsAll.filter(x => (new Date(x.date)).getMonth() === this.calendar.currentDate.getMonth());
@@ -39,11 +42,12 @@ export class CalendarPage implements OnInit {
         console.log('onCurrentDateChanged');
         console.log(e.getMonth());
         this.transactionsByMonth = this.transactionsAll.filter(x => (new Date(x.date)).getMonth() === e.getMonth());
-        this.monthSum = this.transactionsByMonth.reduce((sum, current) => 1 * sum + 1 * current.cost, 0);
+        this.monthSum = this.transactionsByMonth.reduce((sum, current) => 1 * sum + (current.type === 'increase' ? 1 : -1) * current.cost, 0);
         console.log(this.transactionsByMonth);
         console.log(this.monthSum);
         this.currentMonth = e.getMonth();
         this.monthName = this.monthArray[e.getMonth()];
+        this.year = e.getFullYear();
     }
 
     reloadSource(startTime, endTime) {

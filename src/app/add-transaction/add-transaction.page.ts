@@ -94,7 +94,7 @@ export class AddTransactionPage implements OnInit {
 
     submitPurchase(): void {
         console.log(this.transactionForm);
-        const temp = this.storageSrv.transactions;
+        const temp = this.storageSrv.transactions || [];
         console.log(temp);
         temp.unshift({
             type: 'decrease',

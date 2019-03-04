@@ -126,6 +126,9 @@ export class EditTransactionPage implements OnInit {
     submitPurchase(): void {
         console.log(this.tagsReference);
         const oldTransactions = this.storageSrv.transactions;
+        this.transactionForm.value.type = this.tempTransaction.type;
+        console.log(this.tempTransaction.type);
+        console.log(this.transactionForm);
         oldTransactions[this.route.snapshot.paramMap.get('index')] = {...this.transactionForm.value,
             tags: (this.type.value === 'decrease') ? this.tagsReference.purchaseTags : ''};
         this.storageSrv.balance += this.oldBalance + (this.type.value === 'decrease' ? -1 : 1) * this.cost.value;
@@ -136,60 +139,4 @@ export class EditTransactionPage implements OnInit {
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
     }
 
-    test() {
-        this.displayChips();
-    }
-
-    displayChips() {
-        let localTags = this.tags.replace(/([^A-Za-zА-Яа-я]+)/g, '$1§sep§').split('§sep§');
-        localTags = localTags.filter(tag => tag !== '');
-        localTags = localTags.map(tag => {
-            return tag.replace(/\s/g, '');
-        });
-        console.log(localTags);
-        console.log(this.storageSrv.tags);
-        const temp = this.storageSrv.tags;
-
-        localTags.forEach(tag => {
-            if (temp.hasOwnProperty(tag)) {
-                temp[tag]++;
-            } else {
-                temp[tag] = 1;
-            }
-        });
-        if (temp.hasOwnProperty('')) {
-            delete temp[''];
-        }
-        for (const tag in temp) {
-            if (this.tagsArray.find(element => element.name === tag)) {
-                this.tagsArray.find(element => element.name === tag);
-            } else {
-                this.tagsArray.push({
-                    name: tag,
-                    value: temp[tag],
-                    chosen: 0
-                });
-            }
-        }
-        this.tagsArray.sort(((a, b) => b.value - a.value));
-
-        this.storageSrv.tags = temp;
-        console.log(this.tagsArray);
-    }
-
-    choseTag(tag) {
-
-        let tempTag = this.tagsArray.find(element => element.name === tag.name);
-        tempTag.chosen = !tempTag.chosen;
-        console.log(this.tagsArray.filter(element => element.name !== ''));
-        this.tags = this.tagsArray.map(element => element.chosen ? element.name : '').join(' ');
-        this.tags = this.tags.trim();
-        this.tags = this.tags.replace(/ +(?= )/g, '');
-
-        console.log(this.tags);
-    }
-
-    removeSpaces(arr) {
-        // return arr.filter(el => el !== '');
-    }
 }

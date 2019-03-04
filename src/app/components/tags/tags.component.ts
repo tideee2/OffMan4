@@ -92,9 +92,9 @@ export class TagsComponent implements OnInit {
     async deleteGlobalTag(tag) {
 
         const alert = await this.alertCtrl.create({
-            header: 'Alert',
-            subHeader: 'Subtitle',
-            message: 'This is an alert message.',
+            header: 'Message',
+            subHeader: 'Confirm tag delete',
+            // message: 'Confirm tag delete',
             buttons: [
                 {
                     text: 'Cancel',

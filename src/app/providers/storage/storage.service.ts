@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {TransactionModel} from '../../models/transaction';
 import { Storage } from '@ionic/storage';
 import {Observable} from 'rxjs';
+import {EventEmitter} from 'events';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class StorageService {
   _tags: any;
   q: any;
   filteredTransactions = [];
+  changeFilter$: EventEmitter<any>;
+
   constructor(public storage: Storage) {
     console.log('Init StorageService');
     this.storage.ready().then(ok => {
@@ -37,6 +40,7 @@ export class StorageService {
       observer.next(this.storage.get('tags'));
       observer.complete();
     });
+    this.changeFilter$ = new EventEmitter();
   }
 
   getTags() {

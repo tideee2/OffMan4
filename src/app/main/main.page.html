@@ -17,7 +17,7 @@
     <ion-list class="product-list" padding-horizontal>
         <ion-list-header class="list-title ion-text-center">
             <span>Transaction history</span>
-            <!--<span *ngIf="showFilterCancel" class="cancel-filter" (click)="cancelFilter()">show all</span>-->
+            <span *ngIf="showFilterCancel" class="cancel-filter" (click)="cancelFilter()">show all</span>
         </ion-list-header>
         <ion-item *ngFor="let x of transactions; let i = index" class="tr-cont-lvl1" no-padding>
             <div class="transaction-container" (click)="showButton(container)" #container tappable>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col" *ngIf="!showEditButton">
                     <div [className]="'cost ' + (x.type === 'decrease' ? 'decrease-color' : 'increase-color')">
-                        {{x.cost}} грн
+                        {{x.cost}} UAH
                     </div>
                     <div class="container-icons row">
                         <div class="edit-button col-6" (click)="editTransactionClick(i)">

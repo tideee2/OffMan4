@@ -8,7 +8,7 @@
 <ion-content padding>
   <div class="calendar-buttons">
     <ion-icon class="arrows" name="md-arrow-dropleft" color="orange" (click)="prevMonth()"></ion-icon>
-    <span class="month-name">{{monthName}}</span>
+    <span class="month-name">{{monthName}} {{year}}</span>
     <ion-icon class="arrows" name="md-arrow-dropright" color="orange" (click)="nextMonth()"></ion-icon>
   </div>
   <ng-template #template let-view="view" let-row="row" let-col="col">
@@ -27,27 +27,25 @@
             startingDayMonth="1"
             step="30">
   </calendar>
-  <ion-card no-padding no-margin>
-    <ion-card-header>
-      Total
-    </ion-card-header>
+  <ion-card no-padding no-margin class="balance">
     <ion-card-content>
-      {{monthSum}}
+      <span>Total</span>
+      <span>{{monthSum}}</span>
     </ion-card-content>
   </ion-card>
-  <ion-card no-padding no-margin>
+  <ion-card no-padding no-margin class="purchase-list">
     <ion-card-header>
       List of purchases
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content no-padding no-margin>
       <ion-row *ngFor="let trans of transactionsByMonth">
-        <ion-col size="2">
+        <ion-col size="4" class="col-left" [style.border-left-color]="listOfColors[trans.category]">
           {{trans.cost}}
         </ion-col>
         <ion-col size="4">
           {{trans.description}}
         </ion-col>
-        <ion-col size="6">
+        <ion-col size="4">
           {{trans.date | date}}
         </ion-col>
       </ion-row>

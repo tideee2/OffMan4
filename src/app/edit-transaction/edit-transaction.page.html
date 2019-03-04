@@ -6,12 +6,13 @@
 
 <ion-content padding>
   <form [formGroup]="transactionForm">
-    <ion-item no-padding lines="full">
+    <ion-item no-padding lines="full" class="transaction-type">
       <ion-label>Select type</ion-label>
-      <ion-select formControlName="type" name="type" [(ngModel)]="tempTransaction.type">
-        <ion-select-option value="decrease" [selected]="true">Outcoming</ion-select-option>
-        <ion-select-option value="increase">Incoming</ion-select-option>
-      </ion-select>
+      <!--<ion-select formControlName="type" name="type" [(ngModel)]="tempTransaction.type">-->
+        <!--<ion-select-option value="decrease" [selected]="true">Outcoming</ion-select-option>-->
+        <!--<ion-select-option value="increase">Incoming</ion-select-option>-->
+      <!--</ion-select>-->
+      <ion-label>{{tempTransaction.type}}</ion-label>
     </ion-item>
 
     <ion-item *ngIf="type.value === 'decrease'" no-padding >
@@ -56,20 +57,21 @@
         </ion-col>
       </ion-row>
     </div>
+    <app-tags
+            *ngIf="tempTransaction.type == 'decrease'"
+            [purchaseTags]="tempTransaction.tags"
+    ></app-tags>
+    <ion-row class="btn-container">
+      <ion-col size="6">
+        <ion-button expand="block" fill="clear" shape="" (click)="cancel()">Cancel</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" fill="solid" (click)="submitPurchase()" color="orange" >
+          Submit
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </form>
-  <app-tags
-          *ngIf="type.value == 'decrease'"
-          [purchaseTags]="tempTransaction.tags"
-  ></app-tags>
-  <ion-row class="btn-container">
-    <ion-col size="6">
-      <ion-button expand="block" fill="clear" shape="" (click)="cancel()">Cancel</ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button expand="block" fill="solid" (click)="submitPurchase()" color="orange" >
-        Submit
-      </ion-button>
-    </ion-col>
-  </ion-row>
+
 
 </ion-content>
