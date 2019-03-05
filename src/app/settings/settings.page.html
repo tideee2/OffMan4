@@ -11,41 +11,8 @@
       <img src="../../assets/icon/niger.png">
     </div>
   </div>
-  <p class="name-tag">tags</p>
+  <p class="name-tag">Tags</p>
   <app-tags
     [mode]="'settings'"
   ></app-tags>
-  <!--<form [formGroup]="changePassForm">-->
-    <!--<div class="input-container">-->
-      <!--<ion-item *ngIf="!isEditName" no-lines>-->
-        <!--<ion-label>-->
-          <!--<span> {{username.value}}</span>-->
-          <!--<ion-icon name="md-create" *ngIf="!isEditName" (click)="editClick()"></ion-icon>-->
-        <!--</ion-label>-->
-      <!--</ion-item>-->
-      <!--<div class="input-wrapper" *ngIf="isEditName">-->
-        <!--<ion-item  no-lines>-->
-          <!--<ion-input class="form-control" id="username" formControlName="username"-->
-                     <!--placeholder="Enter username" #qqq></ion-input>-->
-        <!--</ion-item>-->
-        <!--<button ion-button clear [disabled]="!changePassForm.valid" class="confirm-btn">-->
-          <!--<ion-icon name="md-checkmark" *ngIf="isEditName" (click)="changeUsername()" class="check-icon"></ion-icon>-->
-        <!--</button>-->
-      <!--</div>-->
-      <!--<div *ngIf="username.invalid && (username.dirty || username.touched)" color="danger"-->
-           <!--class="alert alert-danger">-->
-        <!--<span class="text-ios-danger">{{ errorSrv.getErrorMessage(changePassForm, 'username', validation_messages) }}</span>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<ion-item class="btn change-btn" no-lines (click)="goToChangePass()">-->
-      <!--<button ion-button clear size="normal" class="submit-btn ion-col-3" color="transparent">-->
-        <!--Change password-->
-      <!--</button>-->
-    <!--</ion-item>-->
-    <!--<ion-item class="btn logout-btn" text-center no-lines>-->
-      <!--<button ion-button color="danger" size="normal" class="submit-btn ion-col-3" text-center (click)="logout()">-->
-        <!--Logout-->
-      <!--</button>-->
-    <!--</ion-item>-->
-  <!--</form>-->
 </ion-content>

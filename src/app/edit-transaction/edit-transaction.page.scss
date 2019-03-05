@@ -15,6 +15,9 @@ ion-header{
 // @todo fix highlight-line for android
 
 ion-content {
+  ion-select {
+    text-transform: capitalize;
+  }
   ion-item {
     color: #fff;
     --highlight-background: white!important;

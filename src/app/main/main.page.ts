@@ -55,10 +55,12 @@ export class MainPage implements OnInit {
     }
 
     ngOnInit() {
+        console.log(navigator['app']);
     }
 
-    ionViewDidEnter() {
+    ionViewDidEnter() {console.log(navigator['app']);
         this.subscription = this.platform.backButton.subscribe(() => {
+
             navigator['app'].exitApp();
         });
     }

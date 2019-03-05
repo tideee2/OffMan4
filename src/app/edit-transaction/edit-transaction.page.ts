@@ -63,12 +63,13 @@ export class EditTransactionPage implements OnInit {
                 maxlength: 'Description cannot be more than 20 characters long'
             },
         };
-        this.tempTransaction = this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')];
+            this.tempTransaction = this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')];
         // this.tempTransaction.tags =  this.removeSpaces(this.tempTransaction.tags);
         this.tagsArray = this.tempTransaction.tags;
         this.oldBalance = (this.tempTransaction.type === 'decrease' ? 1 : -1) * this.tempTransaction.cost;
-        console.log(this.tagsArray);
         // @todo remove ts-ignore
+
+        console.log(this.tagsArray);
 
         // @ts-ignore
         this.transactionForm.controls.date.value = new Date(this.tempTransaction.date);
@@ -125,6 +126,7 @@ export class EditTransactionPage implements OnInit {
 
     submitPurchase(): void {
         console.log(this.tagsReference);
+        console.log(this.transactionForm);
         const oldTransactions = this.storageSrv.transactions;
         this.transactionForm.value.type = this.tempTransaction.type;
         console.log(this.tempTransaction.type);
