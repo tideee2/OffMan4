@@ -46,8 +46,8 @@ export class MainPage implements OnInit {
             this.showFilterCancel = true;
             this.transactions = this.storageSrv.transactions.filter((transaction: TransactionModel) => {
                 const categoryQuery = (data.category) ? !!~data.category.indexOf(transaction.category) : true;
-                const dateFromQuery = (data.dateFrom) ? transaction.date > (new Date(data.dateFrom)).toISOString() : true;
-                const dateToQuery = (data.dateTo) ? transaction.date < (new Date(data.dateTo)).toISOString() : true;
+                const dateFromQuery = (data.dateFrom) ? (new Date(transaction.date)).toDateString() >= (new Date(data.dateFrom)).toDateString() : true;
+                const dateToQuery = (data.dateTo) ? (new Date(transaction.date)).toDateString() <= (new Date(data.dateTo)).toDateString() : true;
                 console.log(categoryQuery + ':' + dateFromQuery + ':' + dateToQuery);
                 return categoryQuery && dateFromQuery && dateToQuery;
             });
@@ -60,8 +60,10 @@ export class MainPage implements OnInit {
 
     ionViewDidEnter() {console.log(navigator['app']);
         this.subscription = this.platform.backButton.subscribe(() => {
-
-            navigator['app'].exitApp();
+            // alert(this.storageSrv.isFilterOpen);
+            if (!this.storageSrv.isFilterOpen) {
+                navigator['app'].exitApp();
+            }
         });
     }
 

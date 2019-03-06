@@ -14,7 +14,7 @@ export class TagsComponent implements OnInit {
     allTags = [];
     @Input() purchaseTags;
     @Input() all;
-    @Input() mode?;
+    @Input() mode? = false;
     tagsArray = [];
     tagsString = '';
     form: FormGroup;
@@ -42,6 +42,7 @@ export class TagsComponent implements OnInit {
     chooseTag(tag, index) {
         this.tagsArray[index].chosen = !this.tagsArray[index].chosen;
         this.purchaseTags = this.tagsArray.filter(element => element.chosen).map(element => element.name);
+        console.log(this.purchaseTags);
         if (!this.mode) {
             this.tagsString = this.purchaseTags.join(' ');
         }
@@ -72,12 +73,9 @@ export class TagsComponent implements OnInit {
         this.purchaseTags = temp.split(' ');
         console.log(this.tagsArray);
         this.tagsArray = _.unionBy(this.tagsArray, temp.split(' ').map(tag => ({name: tag, value: 1, chosen: 1})), 'name');
+        _.remove(this.tagsArray, (el) => el.name === '');
         console.log(this.tagsArray);
         console.log(temp.split(' ').map(tag => ({name: tag, value: 1, chosen: 1})));
-        // const newTags = {};
-        // this.tagsArray.forEach(tag => {
-        //     newTags[tag.name] = tag.value;
-        // });
         this.storageSrv.tags = this.convertTagsToStorage(this.tagsArray);
     }
 

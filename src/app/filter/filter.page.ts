@@ -23,12 +23,16 @@ export class FilterPage implements OnInit {
     }
 
     ngOnInit() {
+        this.storageSrv.isFilterOpen = true;
     }
 
     cancel() {
+        this.storageSrv.isFilterOpen = false;
         this.modalCtrl.dismiss();
     }
-
+    ionViewWillLeave() {
+        this.storageSrv.isFilterOpen = false;
+    }
     submitFilter() {
 
         this.storageSrv.changeFilter$.emit('filter:change', {
@@ -37,5 +41,6 @@ export class FilterPage implements OnInit {
             category: this.category
         });
         this.modalCtrl.dismiss();
+        this.storageSrv.isFilterOpen = false;
     }
 }

@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ErrorsService} from '../providers/errors/errors.service';
 import {StorageService} from '../providers/storage/storage.service';
 import {TagsComponent} from '../components/tags/tags.component';
+import {Content} from '@angular/compiler/src/render3/r3_ast';
 // import {TagsComponent} from '../components/tags/tags.component';
 
 @Component({
@@ -31,6 +32,7 @@ export class AddTransactionPage implements OnInit {
                 public errorSrv: ErrorsService,
                 public storageSrv: StorageService,
                 public formBuilder: FormBuilder,
+                // public content: Content
     ) {
         this.transactionForm = this.formBuilder.group({
             cost: ['', Validators.compose([
@@ -63,6 +65,14 @@ export class AddTransactionPage implements OnInit {
     ngOnInit() {
         console.log('qq');
     }
+
+    // ngAfterViewInit(): void {
+    //     window.addEventListener('keyboardDidShow', this.customScroll);
+    // }
+    //
+    // private customScroll() {
+    //     this.content.scrollTo(0, 100); // 100 replaced by your value
+    // }
 
     get cost() {
         return this.transactionForm.get('cost');

@@ -14,7 +14,7 @@
       </ion-select>
     </ion-item>
 
-    <div class="input-container">
+
       <ion-item no-padding lines="full">
         <ion-label>Price</ion-label>
         <ion-input name="cost" formControlName="cost" placeholder="" type="number"></ion-input>
@@ -23,23 +23,22 @@
         <ion-label>Comment</ion-label>
         <ion-input name="description" formControlName="description"></ion-input>
       </ion-item>
-      <ion-row>
-        <ion-col *ngIf="cost.invalid && (cost.dirty || cost.touched)" color="danger"
+
+        <p *ngIf="cost.invalid && (cost.dirty || cost.touched)" color="danger"
              class="alert alert-danger">
           <span class="text-ios-danger">{{ errorSrv.getErrorMessage(transactionForm, 'cost', validation_messages) }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col *ngIf="description.invalid && (description.dirty || description.touched)" color="danger"
+        </p>
+
+        <p *ngIf="description.invalid && (description.dirty || description.touched)" color="danger"
              class="alert alert-danger">
           <span class="text-ios-danger">{{ errorSrv.getErrorMessage(transactionForm, 'description', validation_messages) }}</span>
-        </ion-col>
-      </ion-row>
-    </div>
+        </p>
+
+    <app-tags
+            [purchaseTags]="purchaseTags"
+    ></app-tags>
   </form>
-  <app-tags
-          [purchaseTags]="purchaseTags"
-  ></app-tags>
+
 
     <ion-row class="btn-container">
       <ion-col size="6">

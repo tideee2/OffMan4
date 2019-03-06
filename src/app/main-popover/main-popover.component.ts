@@ -58,6 +58,7 @@ export class MainPopoverComponent implements OnInit {
             componentProps: {value: 123}
         });
         this.close();
+
         await modal.present();
     }
 

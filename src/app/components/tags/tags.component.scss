@@ -14,3 +14,8 @@ ion-item {
     color: #fff;
   }
 }
+.tag-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

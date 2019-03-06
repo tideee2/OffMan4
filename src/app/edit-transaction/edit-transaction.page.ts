@@ -70,10 +70,13 @@ export class EditTransactionPage implements OnInit {
         // @todo remove ts-ignore
 
         console.log(this.tagsArray);
-
+        console.log(this.tempTransaction);
         // @ts-ignore
         this.transactionForm.controls.date.value = new Date(this.tempTransaction.date);
-        console.log(this.transactionForm.controls);
+        // @ts-ignore
+        this.transactionForm.controls.category.value = this.tempTransaction.category;
+        // @ts-ignore
+        this.transactionForm.controls.type.value = this.tempTransaction.type;
     }
 
     ngOnInit() {
@@ -127,17 +130,19 @@ export class EditTransactionPage implements OnInit {
     submitPurchase(): void {
         console.log(this.tagsReference);
         console.log(this.transactionForm);
+        console.log(this.category);
         const oldTransactions = this.storageSrv.transactions;
         this.transactionForm.value.type = this.tempTransaction.type;
         console.log(this.tempTransaction.type);
         console.log(this.transactionForm);
         oldTransactions[this.route.snapshot.paramMap.get('index')] = {...this.transactionForm.value,
             tags: (this.type.value === 'decrease') ? this.tagsReference.purchaseTags : ''};
+
         this.storageSrv.balance += this.oldBalance + (this.type.value === 'decrease' ? -1 : 1) * this.cost.value;
         this.storageSrv.transactions = oldTransactions;
-        if (!this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category) {
-            this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category = 'increase';
-        }
+        // if (!this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category) {
+        //     this.storageSrv.transactions[this.route.snapshot.paramMap.get('index')].category = 'increase';
+        // }
         this.navCtrl.navigateBack('/main').catch(err => console.log(err));
     }
 

@@ -18,6 +18,7 @@ export class StorageService {
   q: any;
   filteredTransactions = [];
   changeFilter$: EventEmitter<any>;
+  isFilterOpen = false;
 
   constructor(public storage: Storage) {
     console.log('Init StorageService');
