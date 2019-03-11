@@ -52,7 +52,6 @@ export class CalendarPage implements OnInit {
 
     reloadSource(startTime, endTime) {
         console.log('reloadSource');
-
     }
 
     onEventSelected(e) {

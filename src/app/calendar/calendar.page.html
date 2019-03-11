@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start"> <ion-back-button defaultHref="main"></ion-back-button> </ion-buttons>
-    <ion-title>calendar</ion-title>
+    <ion-title>Calendar</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +20,6 @@
             [calendarMode]="calendar.mode"
             [currentDate]="calendar.currentDate"
             (onCurrentDateChanged)="onCurrentDateChanged($event)"
-            (onRangeChanged)="reloadSource(startTime, endTime)"
             (onEventSelected)="onEventSelected($event)"
             (onTitleChanged)="onViewTitleChanged($event)"
             (onTimeSelected)="onTimeSelected($event)"

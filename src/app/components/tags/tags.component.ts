@@ -32,7 +32,7 @@ export class TagsComponent implements OnInit {
         console.log(this.purchaseTags);
     }
 
-    @HostListener('keypress', ['$event']) kuku(event: any) {
+    @HostListener('keypress', ['$event']) inputPress(event: any) {
         console.log(event);
         if (!new RegExp(/[a-zA-Z ]/).test(event.key)) {
             event.preventDefault();
@@ -90,19 +90,19 @@ export class TagsComponent implements OnInit {
     async deleteGlobalTag(tag) {
 
         const alert = await this.alertCtrl.create({
-            header: 'Message',
-            subHeader: 'Confirm tag delete',
+            header: 'Confirm Delete',
+            message: 'Are you sure you want to delete this tag?',
             // message: 'Confirm tag delete',
             buttons: [
                 {
-                    text: 'Cancel',
+                    text: 'No',
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
                         console.log('Confirm Cancel: blah');
                     }
                 }, {
-                    text: 'Okay',
+                    text: 'Yes',
                     handler: () => {
                         _.remove(this.tagsArray, (element) => element.name === tag.name);
                         this.storageSrv.tags = this.convertTagsToStorage(this.tagsArray);

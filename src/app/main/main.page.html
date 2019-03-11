@@ -17,10 +17,10 @@
     <ion-list class="product-list" padding-horizontal>
         <ion-list-header class="list-title ion-text-center">
             <span>Transaction history</span>
-            <span *ngIf="showFilterCancel" class="cancel-filter" (click)="cancelFilter()">show all</span>
+            <span *ngIf="showFilterCancel" class="cancel-filter" (click)="cancelFilter()">Show all</span>
         </ion-list-header>
         <ion-item *ngIf="showFilterCancel && !transactions.length" text-center>
-            <ion-label color="danger">Filter return null</ion-label>
+            <ion-label color="danger" class="filter-not-found">Not found</ion-label>
         </ion-item>
         <ion-item *ngFor="let x of transactions; let i = index" class="tr-cont-lvl1" no-padding>
             <div class="transaction-container" (click)="showButton(container)" #container tappable>

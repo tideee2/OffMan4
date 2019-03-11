@@ -43,7 +43,7 @@ export class AddTransactionPage implements OnInit {
             description: ['',
                 Validators.compose([
                     Validators.required,
-                    Validators.maxLength(30),
+                    Validators.maxLength(20),
                     Validators.minLength(5)
                 ])]
         });
@@ -111,7 +111,7 @@ export class AddTransactionPage implements OnInit {
             cost: this.cost.value,
             category: this.category.value,
             description: this.description.value,
-            date: (new Date()).toISOString(),
+            date: (new Date()).toISOString().split('T')[0],
             tags: this.tagsReference.purchaseTags
         });
         console.log(temp);

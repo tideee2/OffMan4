@@ -46,8 +46,8 @@ export class MainPage implements OnInit {
             this.showFilterCancel = true;
             this.transactions = this.storageSrv.transactions.filter((transaction: TransactionModel) => {
                 const categoryQuery = (data.category) ? !!~data.category.indexOf(transaction.category) : true;
-                const dateFromQuery = (data.dateFrom) ? (new Date(transaction.date)).toDateString() >= (new Date(data.dateFrom)).toDateString() : true;
-                const dateToQuery = (data.dateTo) ? (new Date(transaction.date)).toDateString() <= (new Date(data.dateTo)).toDateString() : true;
+                const dateFromQuery = (data.dateFrom) ? (new Date(transaction.date)) >= (new Date(data.dateFrom)) : true;
+                const dateToQuery = (data.dateTo) ? (new Date(transaction.date)) <= (new Date(data.dateTo)) : true;
                 console.log(categoryQuery + ':' + dateFromQuery + ':' + dateToQuery);
                 return categoryQuery && dateFromQuery && dateToQuery;
             });
@@ -203,14 +203,14 @@ export class MainPage implements OnInit {
                 }, {
                     text: 'Ok',
                     handler: (data) => {
-                        if (!data.balance || !data.description) {
-                            this.toastSrv.showToast('balance or description is empty');
+                        if (!data.balance) {
+                            this.toastSrv.showToast('balance is empty');
                             return;
                         }
-                        if (data.description.length < 5) {
-                            this.toastSrv.showToast('description is too short');
-                            return;
-                        }
+                        // if (data.description.length < 5) {
+                        //     this.toastSrv.showToast('description is too short');
+                        //     return;
+                        // }
                         this.storageSrv.balance += 1 * data.balance;
                         const temp = this.storageSrv.transactions || [];
                         temp.push({
@@ -218,7 +218,7 @@ export class MainPage implements OnInit {
                             category: 'increase',
                             cost: data.balance,
                             description: data.description,
-                            date: (new Date()).toISOString(),
+                            date: (new Date()).toISOString().split('T')[0],
                         });
                         temp.sort((a, b) => a - b);
                         // @todo remove transaction duplicate

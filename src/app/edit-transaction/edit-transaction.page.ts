@@ -28,6 +28,7 @@ export class EditTransactionPage implements OnInit {
     public tagsArray = [];
     public chosenTags = [];
     @ViewChild(TagsComponent) tagsReference;
+    tempDate: any;
 
     constructor(public navCtrl: NavController,
                 public errorSrv: ErrorsService,
@@ -77,6 +78,8 @@ export class EditTransactionPage implements OnInit {
         this.transactionForm.controls.category.value = this.tempTransaction.category;
         // @ts-ignore
         this.transactionForm.controls.type.value = this.tempTransaction.type;
+
+        this.tempDate = (new Date(this.tempTransaction.date));
     }
 
     ngOnInit() {

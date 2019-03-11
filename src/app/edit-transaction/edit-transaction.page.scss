@@ -54,4 +54,8 @@ ion-content {
       text-align: right;
     }
   }
+  .alert-danger {
+    color: var(--ion-color-danger);
+    font-size: 0.8rem;
+  }
 }
