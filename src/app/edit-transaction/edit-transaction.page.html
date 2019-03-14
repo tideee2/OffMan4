@@ -7,7 +7,7 @@
 <ion-content padding>
   <form [formGroup]="transactionForm">
     <ion-item no-padding lines="full" class="transaction-type">
-      <ion-label>Select type</ion-label>
+      <ion-label>Type</ion-label>
       <!--<ion-select formControlName="type" name="type" [(ngModel)]="tempTransaction.type">-->
         <!--<ion-select-option value="decrease" [selected]="true">Outcoming</ion-select-option>-->
         <!--<ion-select-option value="increase">Incoming</ion-select-option>-->
@@ -33,7 +33,7 @@
       </ion-item>
     <ion-item no-padding no-margin>
       <ion-label>Chose date</ion-label>
-      <ion-datetime formControlName="date" displayFormat="MM/DD/YYYY" name="date" [(ngModel)]="tempTransaction.date"></ion-datetime>
+      <ion-datetime formControlName="date" displayFormat="DD/MMM/YYYY" pickerFormat="DD/MMM/YYYY" name="date" [(ngModel)]="tempTransaction.date"></ion-datetime>
     </ion-item>
         <p *ngIf="cost.invalid && (cost.dirty || cost.touched)" color="danger"
                  class="alert alert-danger">

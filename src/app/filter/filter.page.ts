@@ -3,6 +3,7 @@ import {ModalController, NavController, NavParams} from '@ionic/angular';
 import {Vars} from '../../config/settings';
 import {Router} from '@angular/router';
 import {StorageService} from '../providers/storage/storage.service';
+import {ToastShowService} from '../providers/toast-show/toast-show.service';
 
 @Component({
     selector: 'app-filter',
@@ -18,6 +19,7 @@ export class FilterPage implements OnInit {
     constructor(
         public navCtrl: NavController,
         public router: Router,
+        public toastSrv: ToastShowService,
         public storageSrv: StorageService,
         public modalCtrl: ModalController) {
     }
@@ -42,5 +44,13 @@ export class FilterPage implements OnInit {
         });
         this.modalCtrl.dismiss();
         this.storageSrv.isFilterOpen = false;
+    }
+
+    dateCahnges(element) {
+        console.log(this.dateFrom + ':' + this.dateTo);
+        if (this.dateFrom > this.dateTo) {
+            this.toastSrv.showToast('date To must be more than date From')
+            element.value = '';
+        }
     }
 }

@@ -1,42 +1,46 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start"> <ion-back-button defaultHref="main" (click)="cancel()"></ion-back-button> </ion-buttons>
-    <ion-title>Filter</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="main" (click)="cancel()"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Filter</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <div class="input-container">
-    <ion-label>Chose date</ion-label>
-    <ion-item>
-      <ion-label>From</ion-label>
-      <ion-datetime displayFormat="DD/MMM/YYYY" pickerFormat="DD/MMM/YYYY" value="dateFrom" [(ngModel)]="dateFrom"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>To</ion-label>
-      <ion-datetime displayFormat="DD/MMM/YYYY" pickerFormat="DD/MMM/YYYY" value="dateTo" [(ngModel)]="dateTo"></ion-datetime>
-    </ion-item>
-  </div>
-  <div class="input-container">
-    <ion-label>Category</ion-label>
-    <ion-item>
-      <ion-label>Chose category</ion-label>
-      <ion-select value="category" multiple="true" class="cat-list" mode="md" [(ngModel)]="category">
-        <ion-select-option  *ngFor="let x of listOfCategories" value="{{x}}">{{x}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
+    <div class="input-container">
+        <ion-label>Chose date</ion-label>
+        <ion-item>
+            <ion-label>From</ion-label>
+            <ion-datetime displayFormat="DD/MMM/YYYY" pickerFormat="DD/MMM/YYYY" value="dateFrom"
+                          [(ngModel)]="dateFrom" (ionChange)="dateCahnges(dateFromEl)" #dateFromEl></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>To</ion-label>
+            <ion-datetime displayFormat="DD/MMM/YYYY" pickerFormat="DD/MMM/YYYY" value="dateTo" [(ngModel)]="dateTo"
+                          (ionChange)="dateCahnges(dateToEl)" #dateToEl></ion-datetime>
+        </ion-item>
+    </div>
+    <div class="input-container">
+        <ion-label>Category</ion-label>
+        <ion-item>
+            <ion-label>Chose category</ion-label>
+            <ion-select value="category" multiple="true" class="cat-list" mode="md" [(ngModel)]="category">
+                <ion-select-option *ngFor="let x of listOfCategories" value="{{x}}">{{x}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </div>
 
-  <ion-row class="btn-container">
-    <ion-col size="6">
-      <ion-button expand="block" fill="clear" shape="" (click)="cancel()">Cancel</ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button expand="block" fill="solid" (click)="submitFilter()" color="orange">
-        Submit
-      </ion-button>
-    </ion-col>
-  </ion-row>
+    <ion-row class="btn-container">
+        <ion-col size="6">
+            <ion-button expand="block" fill="clear" shape="" (click)="cancel()">Cancel</ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button expand="block" fill="solid" (click)="submitFilter()" color="orange">
+                Submit
+            </ion-button>
+        </ion-col>
+    </ion-row>
 
 
 </ion-content>

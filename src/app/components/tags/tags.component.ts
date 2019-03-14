@@ -32,13 +32,6 @@ export class TagsComponent implements OnInit {
         console.log(this.purchaseTags);
     }
 
-    @HostListener('keypress', ['$event']) inputPress(event: any) {
-        console.log(event);
-        if (!new RegExp(/[a-zA-Z ]/).test(event.key)) {
-            event.preventDefault();
-        }
-    }
-
     chooseTag(tag, index) {
         this.tagsArray[index].chosen = !this.tagsArray[index].chosen;
         this.purchaseTags = this.tagsArray.filter(element => element.chosen).map(element => element.name);
@@ -111,5 +104,10 @@ export class TagsComponent implements OnInit {
             ]
         });
         return await alert.present();
+    }
+
+    qq($event: KeyboardEvent) {
+        // console.log(this.form);
+        console.log(this.form.valid);
     }
 }

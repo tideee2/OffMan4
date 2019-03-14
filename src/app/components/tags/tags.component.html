@@ -16,14 +16,18 @@
             <form [formGroup]="form">
                 <ion-item no-padding lines="full">
                     <ion-label position="floating">Tags</ion-label>
-                    <ion-input formControlName="tags" name="tags" [(ngModel)]="tagsString"></ion-input>
+                    <ion-input formControlName="tags" name="tags" [(ngModel)]="tagsString" (keydown)="qq($event)"></ion-input>
                 </ion-item>
             </form>
         </ion-col>
+
         <ion-col size="2" class="add-tag-col">
-            <ion-button (click)="addTag()" size="small" color="orange" fill="outline">
+            <ion-button (click)="addTag()" size="small" color="orange" fill="outline" [disabled]="!form.valid">
                 <ion-icon name="add"></ion-icon>
             </ion-button>
         </ion-col>
+        <p *ngIf="!form.valid" color="danger" class="alert alert-danger">
+            <span class="text-ios-danger">Use only letters for tag names</span>
+        </p>
     </ion-row>
 

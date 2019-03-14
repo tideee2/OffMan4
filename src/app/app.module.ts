@@ -12,6 +12,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {IonicStorageModule} from '@ionic/storage';
 import { MainPopoverComponent } from './main-popover/main-popover.component';
 import {FilterPageModule} from './filter/filter.module';
+import {GooglePlus} from '@ionic-native/google-plus/ngx';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -22,6 +24,7 @@ import {FilterPageModule} from './filter/filter.module';
         MainPopoverComponent,
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
@@ -32,6 +35,7 @@ import {FilterPageModule} from './filter/filter.module';
     providers: [
         StatusBar,
         SplashScreen,
+        GooglePlus,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

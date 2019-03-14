@@ -50,6 +50,9 @@ ion-content {
   .transaction-type{
     display: flex;
     justify-content: space-between;
+    ion-label {
+      text-transform: capitalize;
+    }
     ion-label:last-child{
       text-align: right;
     }

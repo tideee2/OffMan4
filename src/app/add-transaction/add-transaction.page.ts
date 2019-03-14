@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {Vars} from '../../config/settings';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -6,6 +6,7 @@ import {ErrorsService} from '../providers/errors/errors.service';
 import {StorageService} from '../providers/storage/storage.service';
 import {TagsComponent} from '../components/tags/tags.component';
 import {Content} from '@angular/compiler/src/render3/r3_ast';
+
 // import {TagsComponent} from '../components/tags/tags.component';
 
 @Component({
@@ -14,6 +15,7 @@ import {Content} from '@angular/compiler/src/render3/r3_ast';
     styleUrls: ['./add-transaction.page.scss'],
 })
 export class AddTransactionPage implements OnInit {
+
     public transactionForm: FormGroup;
     public validation_messages;
     public transaction;
